@@ -6,7 +6,7 @@ public class InputManager : SingletonUnity<InputManager>
 
     void FixedUpdate()
     {
-        if(GameManager.Instance.IsGameRunning)
+        if(GlobalManager.Instance.IsGameRunning)
         {
             //input something
         }

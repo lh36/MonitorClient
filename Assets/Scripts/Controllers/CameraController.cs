@@ -11,10 +11,6 @@ public class CameraController : MonoBehaviour {
 
     //垂直差值
     public float deltaY = 180f;
-    //相机最左端
-    public Transform begin;
-    //相机最右端
-    public Transform end;
 
     private float m_OffsetZ;
     private Vector3 m_LastTargetPosition;

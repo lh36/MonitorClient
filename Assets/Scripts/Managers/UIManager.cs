@@ -4,41 +4,97 @@ using System.Collections.Generic;
 
 public class UIManager : SingletonUnity<UIManager> {
 
-	private GameObject rootView;
-	
-    public GameObject CurrentView;
+	private GameObject m_RootNode;  //UI根节点
 
-    private GameObject GamePanel;
-    private GameObject StartPanel;
+    private List<GameObject> m_ViewList = null; //UI列表
+
+	
 
 	void Awake()
 	{
 		//Screen.SetResolution (1024, 768, false);
+        this.m_ViewList = new List<GameObject> ();
+
+        this.m_RootNode = GameObject.Find ("UI");
 	}
 
 	void Start()
 	{
-		rootView = GameObject.Find ("UI");
-        GamePanel = rootView.transform.Find (Constant.UI_Game).gameObject;
-        StartPanel = rootView.transform.Find (Constant.UI_Start).gameObject;
-
-        InitUIPanel ();
-        InitStart ();
 	}
 
-    public void InitStart()
+    /// <summary>
+    /// 显示UI
+    /// </summary>
+    /// <param name="sViewName">UI name.</param>
+    /// <param name="bOver">是否直接覆盖而不做其他操作</param>
+    public void ShowViewByName(string sViewName, bool bOver=false)
     {
-        GameManager.Instance.IsGameRunning = false;
-        GamePanel.SetActive (false);
-        StartPanel.SetActive (true);
+        GameObject oView = this.m_RootNode.transform.Find (sViewName).gameObject;
+        if (oView == null)
+        {
+            return;
+        }
+
+        oView.SetActive (true);
+
+        if (!bOver) 
+        {
+            var oCurrentView = GetCurrentView();
+            if (oCurrentView != null)
+            {
+                oCurrentView.SetActive (false);
+                this.m_ViewList.Remove (oCurrentView);
+            }
+        }
+
+        this.m_ViewList.Add (oView);
     }
 
-    public void InitUIPanel()
+    /// <summary>
+    /// 获取当前UI
+    /// </summary>
+    public GameObject GetCurrentView()
     {
-        GamePanel.SetActive (true);
-        StartPanel.SetActive (false);
-        GameManager.Instance.IsGameRunning = true;
+        if (this.m_ViewList == null)
+        {
+            return null;
+        }
+
+        int iLen = this.m_ViewList.Count;
+        if (iLen == 0)
+        {
+            return null;
+        }
+        return this.m_ViewList[iLen - 1];
     }
 
+    /// <summary>
+    /// 关闭指定的UI
+    /// </summary>
+    /// <param name="sViewName">UI name.</param>
+    public void CloseViewByName(string sViewName)
+    {
+        foreach (var oView in this.m_ViewList) 
+        {
+            if(oView.name == sViewName)
+            {
+                oView.SetActive (false);
+                this.m_ViewList.Remove (oView);
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Closes all view.
+    /// </summary>
+    public void CloseAllView()
+    {
+        foreach (var oView in this.m_ViewList) 
+        {
+            oView.SetActive (false);
+        }
+        this.m_ViewList.Clear ();
+    }
 
 }

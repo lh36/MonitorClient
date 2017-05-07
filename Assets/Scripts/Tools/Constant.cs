@@ -12,14 +12,16 @@ public class Constant
     static public string Button_Jump = "Jump";
     static public string Button_Click = "Click";
 
-    static public string UI_Game = "GamePanel";
-    static public string UI_Start = "StartPanel";
 
     //************ 配 置 表 ************//
+    //UI
+    public static string UI_Init = "InitView";
+    public static string UI_Select = "SelectView";
+
     //场景
-    public static string[] Scenes = new string[]{"Splash", "Scene1", "Scene2", "Scene3", "Loading"};
+    public static string Scene_Water = "Water";
 
     //服务器地址
-    public static string BaseUrl = "http://coolyiwen.cn:8001";
+    public static string BaseUrl = "http://coolyiwen.cn:8002/monitor/client/";
 }
 

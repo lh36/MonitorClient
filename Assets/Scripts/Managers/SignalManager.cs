@@ -4,40 +4,40 @@ using System.Collections.Generic;
 
 public class SignalManager : SingletonUnity<SignalManager> {
 
-	private Dictionary<MessageID, _MessageHandlerCollection> m_HandlerMap;
-	private Queue<_Message> m_MessageQueue;
+    private Dictionary<SignalID, _SignalHandlerCollection> m_HandlerMap;
+    private Queue<_Signal> m_SignalQueue;
 
 
 	/// <summary>
-	/// 初始化消息管理器
+	/// 初始化信号管理器
 	/// </summary>
-	void Start()
+	void Awake()
 	{
-		this.m_HandlerMap = new Dictionary<MessageID, _MessageHandlerCollection>();
-		this.m_MessageQueue = new Queue<_Message>();
+		this.m_HandlerMap = new Dictionary<SignalID, _SignalHandlerCollection>();
+		this.m_SignalQueue = new Queue<_Signal>();
 	}
 
 	/// <summary>
-	/// 推动消息队列
+	/// 推动信号队列
 	/// </summary>
 	void Update()
 	{
-		if (this.m_MessageQueue == null || this.m_MessageQueue.Count == 0)
+		if (this.m_SignalQueue == null || this.m_SignalQueue.Count == 0)
 		{
 			return;
 		}
 
-		var msg = this.m_MessageQueue.Dequeue();
-		this.m_HandlerMap[msg.ID].DispatchMessage(msg.Sender, msg.Param);
+        var signal = this.m_SignalQueue.Dequeue();
+		this.m_HandlerMap[signal.ID].DispatchSignal(signal.Sender, signal.Param);
 	}
 
 	/// <summary>
-	/// 释放消息管理器的资源
+	/// 释放信号管理器的资源
 	/// </summary>
-	public override void Dispose()
+	public void Dispose()
 	{
-		this.m_MessageQueue.Clear();
-		this.m_MessageQueue = null;
+		this.m_SignalQueue.Clear();
+		this.m_SignalQueue = null;
 
 		foreach (var pair in this.m_HandlerMap)
 		{
@@ -49,99 +49,99 @@ public class SignalManager : SingletonUnity<SignalManager> {
 	}
 
 	/// <summary>
-	/// 添加一个消息接收器
+	/// 添加一个信号接收器
 	/// </summary>
 	/// <param name="pMsgID">消息ID</param>
 	/// <param name="pCallback">接受到消息的回调</param>
-	public void AddHandler(MessageID pMsgID, MessageCallback pCallback)
+	public void AddHandler(SignalID nSignalID, SignalCallback pCallback)
 	{
 		if (pCallback == null)
 		{
 			return;
 		}
 
-		if (this.m_HandlerMap.ContainsKey(pMsgID))
+		if (this.m_HandlerMap.ContainsKey(nSignalID))
 		{
-			this.m_HandlerMap[pMsgID].AddHandler(pCallback);
+			this.m_HandlerMap[nSignalID].AddHandler(pCallback);
 		}
 		else
 		{
-			var mhc = new _MessageHandlerCollection();
+			var mhc = new _SignalHandlerCollection();
 			mhc.AddHandler(pCallback);
-			this.m_HandlerMap.Add(pMsgID, mhc);
+			this.m_HandlerMap.Add(nSignalID, mhc);
 		}
 	}
 
 	/// <summary>
-	/// 移除指定消息接收器
+	/// 移除指定的信号接收器
 	/// </summary>
-	/// <param name="pMsgID">消息ID</param>
+	/// <param name="nSignalID">消息ID</param>
 	/// <param name="pCallback">添加时的回调</param>
-	public void RemoveHandler(MessageID pMsgID, MessageCallback pCallback)
+	public void RemoveHandler(SignalID nSignalID, SignalCallback pCallback)
 	{
 		if (pCallback == null)
 		{
 			return;
 		}
 
-		if (this.m_HandlerMap.ContainsKey(pMsgID))
+		if (this.m_HandlerMap.ContainsKey(nSignalID))
 		{
-			var mhc = this.m_HandlerMap[pMsgID];
+			var mhc = this.m_HandlerMap[nSignalID];
 			mhc.RemoveHandler(pCallback);
 
 			if (mhc.Count == 0)
 			{
-				this.m_HandlerMap.Remove(pMsgID);
+				this.m_HandlerMap.Remove(nSignalID);
 			}
 		}
 	}
 
 	/// <summary>
-	/// 向所有注册的接收器分发指定消息
+	/// 向所有注册的接收器分发指定信号
 	/// </summary>
-	/// <param name="pMsgID">消息ID</param>
-	/// <param name="pSender">消息发送者</param>
-	/// <param name="pParam">消息参数</param>
-	public void DispatchMessage(MessageID pMsgID, object pSender, object pParam = null)
+	/// <param name="nSignalID">消息ID</param>
+	/// <param name="oSender">消息发送者</param>
+	/// <param name="oParam">消息参数</param>
+	public void DispatchSignal(SignalID nSignalID, object oSender, object oParam = null)
 	{
-		if (!this.m_HandlerMap.ContainsKey(pMsgID))
+		if (!this.m_HandlerMap.ContainsKey(nSignalID))
 		{ 
 			return;
 		}
 
-		var m = new _Message()
+		var m = new _Signal()
 		{
-			ID = pMsgID,
-			Sender = pSender,
-			Param = pParam
+			ID = nSignalID,
+			Sender = oSender,
+			Param = oParam
 		};
 
-		this.m_MessageQueue.Enqueue(m);
+		this.m_SignalQueue.Enqueue(m);
 	}
 
 
-	private class _Message
+	private class _Signal
 	{
-		public MessageID ID;
+		public SignalID ID;
 		public object Sender;
 		public object Param;
 	}
 
 
-	private class _MessageHandlerCollection
+	private class _SignalHandlerCollection
 	{
 		public int Count { get { return this.m_HandlerList.Count; } }
 
-		private List<MessageCallback> m_HandlerList;
+		private List<SignalCallback> m_HandlerList;
 
 
-		public _MessageHandlerCollection()
+		public _SignalHandlerCollection()
 		{
-			this.m_HandlerList = new List<MessageCallback>();
+			this.m_HandlerList = new List<SignalCallback>();
 		}
 
 
-		public void AddHandler(MessageCallback pCallback)
+		public void AddHandler(SignalCallback pCallback)
 		{
 			if (!this.m_HandlerList.Contains(pCallback))
 			{
@@ -150,13 +150,13 @@ public class SignalManager : SingletonUnity<SignalManager> {
 		}
 
 
-		public void RemoveHandler(MessageCallback pCallback)
+		public void RemoveHandler(SignalCallback pCallback)
 		{
 			this.m_HandlerList.Remove(pCallback);
 		}
 
 
-		public void DispatchMessage(object pSender, object pParam)
+		public void DispatchSignal(object pSender, object pParam)
 		{
 			for (int i = 0, count = this.m_HandlerList.Count; i < count; i++)
 			{
@@ -174,11 +174,13 @@ public class SignalManager : SingletonUnity<SignalManager> {
 
 }
 
-public delegate void MessageCallback(object pSender, object pParam);
+public delegate void SignalCallback(object pSender, object pParam);
 
 
 //信号标记
-public enum MessageID
+public enum SignalID
 {
-	WindowA_ButtonClicked   
+	InitView_Start,   
+
+    SelectView_SetView,
 }

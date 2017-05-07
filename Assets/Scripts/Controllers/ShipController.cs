@@ -21,10 +21,10 @@ public class ShipController : MonoBehaviour
     void Update()
     {
         //进行船舶参数获取请求
-        if (getParamApi.IsIdle ()) 
-        {
-            StartCoroutine (getParamApi.Request ());
-        }
+//        if (getParamApi.IsIdle ()) 
+//        {
+//            StartCoroutine (getParamApi.Request ());
+//        }
     }
 
     void FixedUpdate()
