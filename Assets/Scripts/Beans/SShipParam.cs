@@ -12,6 +12,19 @@ public struct SShipParam
     public int gear;//船速等级
     public long time;//运行时间
 
+	public SShipParam()
+	{
+		this.lat = 0;
+		this.lon = 0;
+		this.posX = 0;
+		this.posY = 0;
+		this.rudAng = 0;
+		this.traAng = 0;
+		this.speed = 0;
+		this.gear = 0;
+		this.time = 0;
+	}
+
     public SShipParam(float lat, float lon, float posX, float posY, 
         float rudAng, float traAng, float speed, int gear, long time)
     {

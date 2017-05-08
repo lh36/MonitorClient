@@ -25,6 +25,7 @@ public class GlobalManager : SingletonUnity<GlobalManager>
     //对外接口
     public void StartInstance(int iID)
     {
+		this.m_bIsGameRunning = true;
         UIManager.Instance.CloseAllView ();
 
     }
