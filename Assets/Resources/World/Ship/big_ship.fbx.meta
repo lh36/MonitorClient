@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: a0a5e8142e2c5254496a7679463ffca5
-timeCreated: 1488094562
-licenseType: Pro
+timeCreated: 1494209714
+licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
@@ -117,7 +117,6 @@ ModelImporter:
     4300038: Object_21
     4300040: Object_22
     4300042: Object_23
-    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -132,7 +131,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -142,8 +141,8 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 80
-    meshCompression: 2
+    globalScale: 100
+    meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0

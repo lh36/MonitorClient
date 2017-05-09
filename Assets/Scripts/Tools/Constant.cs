@@ -17,6 +17,7 @@ public class Constant
     //UI
     public static string UI_Init = "InitView";
     public static string UI_Select = "SelectView";
+    public static string UI_Game = "GameView";
 
     //场景
     public static string Scene_Water = "Water";

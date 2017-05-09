@@ -3,8 +3,11 @@ using System.Collections;
 
 public class ShipModel : MonoBehaviour
 {
-	private GetParamApi m_GetParamApi;
 	private SShipParam m_Param;
+
+    private SignalCallback _cbSetStatus;
+
+
 
 	// Use this for initialization
 	void Start ()
@@ -17,5 +20,28 @@ public class ShipModel : MonoBehaviour
 	{
 	
 	}
+
+    //-----------------对外接口-----------------
+
+    //参数索引器
+    public SShipParam Param
+    {
+        set 
+        {
+            this.m_Param = value;
+            this._cbSetStatus (null, value);
+        }
+
+        get {return this.m_Param;}
+    }
+
+    /// <summary>
+    /// 设置状态设置监听
+    /// </summary>
+    /// <param name="_callback">Callback.</param>
+    public void SetStatusListener(SignalCallback _callback)
+    {
+        this._cbSetStatus = _callback;
+    }
 }
 

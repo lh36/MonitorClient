@@ -183,4 +183,8 @@ public enum SignalID
 	InitView_Start,   
 
     SelectView_SetView,
+
+    GameView_ControlChanged,
+
+    ShipParamChanged,
 }

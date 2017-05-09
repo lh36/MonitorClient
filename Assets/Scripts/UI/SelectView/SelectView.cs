@@ -34,11 +34,6 @@ public class SelectView : MonoBehaviour
     {
         this.m_ItemHeight = this.Pf_Instance.GetComponent<RectTransform> ().sizeDelta.y;
     }
-
-    void OnEnable()
-    {
-        this.m_Model.RequestWebInstanceData ();
-    }
         
 
     /// <summary>

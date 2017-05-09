@@ -8,10 +8,19 @@ public class SelectModel : MonoBehaviour
 
     private Dictionary<int, InstanceResp> m_InstanceDict = new Dictionary<int, InstanceResp>();
 
+    void Awake()
+    {
+        Init ();
+    }
+
+    void OnEnable()
+    {
+        RequestWebInstanceData ();
+    }
+
     public void Init()
     {
-        gameObject.AddComponent<GetInstanceApi> ();
-        this.m_GetInstanceNet = gameObject.GetComponent<GetInstanceApi> ();
+        this.m_GetInstanceNet = new GetInstanceApi ();
         this.m_GetInstanceNet.AddCallback (this.SetInstanceData);
     }
 
@@ -46,6 +55,6 @@ public class SelectModel : MonoBehaviour
 
     public void SelectInstance(int iID)
     {
-        GlobalManager.Instance.StartInstance (iID);
+        GlobalManager.Instance.StartInstance (iID, this.m_InstanceDict[iID]);
     }
 }

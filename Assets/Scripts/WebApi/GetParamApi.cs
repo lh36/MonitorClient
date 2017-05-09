@@ -1,23 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GetParamApi{
 
-    private string url = "/ship/getparam";
+    private string url = "get_param/";
 
-    private Ship ship = null;
     private UnityWebRequest www = null;
+    private SignalCallback _callback;
 
     public bool isDone = false;
 
-    /// <summary>
-    /// Initializes a new instance of the api.
-    /// </summary>
-    /// <param name="ship">需要绑定的船舶对象</param>
-    public GetParamApi(Ship ship)
+    public void AddCallback(SignalCallback _callback)
     {
-        this.ship = ship;//绑定船舶对象
+        this._callback = _callback;
     }
 
     /// <summary>
@@ -31,10 +28,10 @@ public class GetParamApi{
     /// <summary>
     /// Request ship params.
     /// </summary>
-    public IEnumerator Request()
+    public IEnumerator Request(int iInstanceID)
     {
         isDone = false;
-        string uri = Constant.BaseUrl + url;
+        string uri = Constant.BaseUrl + url + iInstanceID.ToString();
 
         www = UnityWebRequest.Get (uri);
         yield return www.Send();
@@ -53,40 +50,40 @@ public class GetParamApi{
 
             if(paramJson.status == true)
             {
-                ParamResp resp = paramJson.resp;
-                //构造船舶参数结构体
-                SShipParam param = new SShipParam (resp.lat, resp.lon, resp.posX, resp.posY, resp.rudAng, resp.traAng, resp.speed, resp.gear, resp.time);
-                //设定参数
-                ship.Param = param;
+                Dictionary<int, SShipParam> dShipParam = new Dictionary<int, SShipParam> ();
+                foreach (var item in paramJson.resp) 
+                {
+                    dShipParam.Add (int.Parse (item.Key), item.Value);
+                }
+                this._callback (null, dShipParam);
             }    
 
             isDone = true;
         }
 
     }
-
-
+        
 }
 
 //JSON解析类
 public class ParamJson
 {
     public bool status = false;
-    public ParamResp resp = null;
+    public Dictionary<string, SShipParam> resp = null;
 
     public ParamJson(){}
 }
-public class ParamResp
-{
-    public float lat;//经度
-    public float lon;//纬度
-    public float posX;//X坐标
-    public float posY;//Y坐标
-    public float rudAng;//舵角
-    public float traAng;//航迹角
-    public float speed;//船速
-    public int gear;//船速等级
-    public long time;//运行时间
-
-    public ParamResp(){}
-}
+//public class ParamResp
+//{
+//    public float lat;//经度
+//    public float lon;//纬度
+//    public float posX;//X坐标
+//    public float posY;//Y坐标
+//    public float rudAng;//舵角
+//    public float traAng;//航迹角
+//    public float speed;//船速
+//    public int gear;//船速等级
+//    public long time;//运行时间
+//
+//    public ParamResp(){}
+//}
