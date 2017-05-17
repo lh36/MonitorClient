@@ -56,7 +56,6 @@ public class CameraController : SingletonUnity<CameraController>
 		m_fScroll = InputManager.Instance.GetScroll();
 		if(m_fScroll != 0)
 		{
-			Debug.Log (m_fScroll);
 			float z = - Mathf.Clamp(-gameObject.transform.localPosition.z + Time.deltaTime * FieldScrollSpeed * m_fScroll, 
 				MinFieldDistance, MaxFieldDistance);
 			float y = -1.61f - 0.28f * z;

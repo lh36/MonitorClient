@@ -18,11 +18,12 @@ public class ParamView : MonoBehaviour
 
     void Awake()
     {
-        this.m_Model = this.gameObject.transform.parent.gameObject.GetComponent<GameModel> ();
+        
     }
 
     void Start()
     {
+		this.m_Model = this.gameObject.transform.parent.gameObject.GetComponent<GameModel> ();
         SignalManager.Instance.AddHandler (SignalID.ShipParamChanged, this.ShowParam);
     }
 

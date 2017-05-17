@@ -15,17 +15,19 @@ public class GameView : MonoBehaviour {
     void Awake()
     {
         this.gameObject.AddComponent<GameModel> ();
-        this.m_Model = this.gameObject.GetComponent<GameModel> ();
     }
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
+		this.m_Model = this.gameObject.GetComponent<GameModel> ();
         this.m_ChooBtnWidth = this.pf_ChooseShipButton.GetComponent<RectTransform> ().sizeDelta.x;
         SetChooseShipButton ();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 	
 	}
 
@@ -35,7 +37,7 @@ public class GameView : MonoBehaviour {
         {
             string sShipID = item.Key;
             GameObject oButton = Instantiate (this.pf_ChooseShipButton) as GameObject;
-            oButton.transform.parent = ChooPos.transform;
+			oButton.transform.SetParent(ChooPos.transform);
             oButton.transform.localPosition = this.m_ChooBtnPos;
             oButton.GetComponent<Button> ().onClick.AddListener (delegate {
                 this.m_Model.ChooseShip (int.Parse (sShipID));

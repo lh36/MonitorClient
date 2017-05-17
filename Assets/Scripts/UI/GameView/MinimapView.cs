@@ -16,13 +16,14 @@ public class MinimapView : MonoBehaviour
 
     void Awake()
     {
-        this.m_Model = this.gameObject.transform.parent.gameObject.GetComponent<GameModel> ();
+        
     }
 
     // Use this for initialization
     void Start ()
     {
         this.m_PointDict = new Dictionary<int, GameObject> ();
+		this.m_Model = this.gameObject.transform.parent.gameObject.GetComponent<GameModel> ();
 
         this.m_v2RealMapSize = GlobalManager.Instance.MapSize;
         this.m_v2MinimapSize = this.MapBg.GetComponent<RectTransform> ().sizeDelta;

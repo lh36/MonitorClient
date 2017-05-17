@@ -9,6 +9,7 @@ public class GlobalManager : SingletonUnity<GlobalManager>
 
     private int m_iInstanceID = 0;
     private InstanceResp m_Instance;
+	private ConnectInstanceApi m_HeartApi;
     public Vector2 MapSize = new Vector2 (100, 100);
 
     public bool IsGameRunning
@@ -23,13 +24,47 @@ public class GlobalManager : SingletonUnity<GlobalManager>
 
     void Start()
     {
+		this.gameObject.AddComponent<ConnectInstanceApi> ();
+		this.m_HeartApi = this.gameObject.GetComponent<ConnectInstanceApi> ();
+		this.m_HeartApi.AddCallback (this.ConnectResult);
+		Invoke ("ConnectInstance", 2);
+
         UIManager.Instance.ShowViewByName (Constant.UI_Init);
     }
 
+	void Update()
+	{
+		
+	}
+
+	private void ConnectInstance()
+	{
+		if(this.m_bIsGameRunning)
+		{
+			if(this.m_HeartApi.IsIdle())
+			{
+				StartCoroutine (this.m_HeartApi.Request (this.m_iInstanceID));
+			}
+		}
+
+		Invoke ("ConnectInstance", 2);
+	}
+
+	private void ConnectResult(object oSender, object oParam)
+	{
+		if(!(bool)oParam)
+		{
+			this.m_bIsGameRunning = false;
+			ShipManager.Instance.DestroyShip ();
+			UIManager.Instance.CloseAllView ();
+			UIManager.Instance.ShowViewByName (Constant.UI_Init);
+		}
+	}
 
     //对外接口
     public void StartInstance(int iInstanceID, InstanceResp oInstance)
     {
+		Debug.Log (iInstanceID);
         this.m_iInstanceID = iInstanceID;
         this.m_Instance = oInstance;
 
@@ -37,6 +72,11 @@ public class GlobalManager : SingletonUnity<GlobalManager>
         ShipManager.Instance.CreateNewInstance (iInstanceID, oInstance);
         UIManager.Instance.ShowViewByName (Constant.UI_Game);
     }
+
+	public int GetInstanceID()
+	{
+		return this.m_iInstanceID;
+	}
 
     public InstanceResp GetInstanceData()
     {

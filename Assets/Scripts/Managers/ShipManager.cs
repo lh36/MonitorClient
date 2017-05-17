@@ -95,6 +95,18 @@ public class ShipManager : SingletonUnity<ShipManager>
 
     }
 
+	/// <summary>
+	/// 销毁所有船只
+	/// </summary>
+	public void DestroyShip()
+	{
+		foreach(var item in this.m_ShipDict)
+		{
+			Destroy (item.Value);
+		}
+		this.m_ShipDict.Clear ();
+	}
+
     public GameObject GetShipObjectByID(int iShipID)
     {
         return this.m_ShipDict [iShipID];

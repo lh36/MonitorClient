@@ -52,8 +52,9 @@ public class ShipController : MonoBehaviour
     /// </summary>
     private void SetShipRudAng()
     {
-        this.m_fCurrentRudAng = Mathf.Lerp (m_fCurrentRudAng, m_fDirRudAng, RotateLerp * Time.deltaTime);
-        this.gameObject.transform.rotation = Quaternion.Euler (-90, this.m_fCurrentRudAng, 0);
+		Quaternion currentRotation = this.gameObject.transform.localRotation;
+		Quaternion dirRotation = Quaternion.Euler (-90, 0, this.m_fDirRudAng - 90);
+		this.gameObject.transform.localRotation = Quaternion.Lerp (currentRotation, dirRotation, RotateLerp * Time.deltaTime);
     }
 
     /// <summary>
