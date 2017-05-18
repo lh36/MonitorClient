@@ -54,10 +54,7 @@ public class GlobalManager : SingletonUnity<GlobalManager>
 	{
 		if(!(bool)oParam)
 		{
-			this.m_bIsGameRunning = false;
-			ShipManager.Instance.DestroyShip ();
-			UIManager.Instance.CloseAllView ();
-			UIManager.Instance.ShowViewByName (Constant.UI_Init);
+            QuitInstance ();
 		}
 	}
 
@@ -71,6 +68,15 @@ public class GlobalManager : SingletonUnity<GlobalManager>
         UIManager.Instance.CloseAllView ();
         ShipManager.Instance.CreateNewInstance (iInstanceID, oInstance);
         UIManager.Instance.ShowViewByName (Constant.UI_Game);
+    }
+
+    public void QuitInstance()
+    {
+        this.m_bIsGameRunning = false;
+        ShipManager.Instance.DestroyShip ();
+        CameraController.Instance.ResetCameraPosition ();
+        UIManager.Instance.CloseAllView ();
+        UIManager.Instance.ShowViewByName (Constant.UI_Init);
     }
 
 	public int GetInstanceID()

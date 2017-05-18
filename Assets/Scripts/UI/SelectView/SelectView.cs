@@ -34,6 +34,11 @@ public class SelectView : MonoBehaviour
     {
         this.m_ItemHeight = this.Pf_Instance.GetComponent<RectTransform> ().sizeDelta.y;
     }
+
+    void OnEnable()
+    {
+        ClearView ();
+    }
         
 
     /// <summary>
@@ -51,18 +56,19 @@ public class SelectView : MonoBehaviour
         }
         IDList.Sort ();
 
-        foreach (int iID in IDList) 
+        foreach (int iInstanceID in IDList) 
         {
             GameObject oItem = Instantiate (Pf_Instance) as GameObject;
             this.m_InstanceItemList.Add (oItem);
-            InstanceResp oInstance = dInstanceData [iID];
+            oItem.name = iInstanceID.ToString ();
+            InstanceResp oInstance = dInstanceData [iInstanceID];
             oItem.GetComponent<InsItem> ().SetItemView (oInstance.time, oInstance.name, oInstance.desp, oInstance.amount);
             oItem.transform.transform.SetParent (this.Scr_Content.transform);
             oItem.transform.localPosition = this.m_StartPoint;
             this.m_StartPoint += new Vector3 (0, -this.m_ItemHeight, 0);
 
             oItem.GetComponent<Button> ().onClick.AddListener (delegate {
-                this.OnItemClicked(iID);
+                this.OnItemClicked(oItem);
             });
         }
     }
@@ -70,9 +76,9 @@ public class SelectView : MonoBehaviour
     /// <summary>
     /// 滑动项点击
     /// </summary>
-    private void OnItemClicked(int iID)
+    private void OnItemClicked(GameObject oInstance)
     {
-        this.m_Model.SelectInstance (iID);
+        this.m_Model.SelectInstance (int.Parse(oInstance.name));
     }
 
     /// <summary>

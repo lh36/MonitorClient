@@ -9,7 +9,7 @@ public class TimeTool
 	public static long ConvertDateTimeToUnix(DateTime time)  
     {          
         System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1, 0, 0, 0, 0));          
-        long t = (time.Ticks - startTime.Ticks) / 10000;   //除10000调整为13位      
+        long t = (time.Ticks - startTime.Ticks) / 1000000;   //除10000调整为10位      
         return t;  
     }  
 
@@ -17,7 +17,7 @@ public class TimeTool
     public static DateTime ConvertUnixToDateTime(long timeStamp)        
     {            
         DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));            
-        long lTime = long.Parse(timeStamp.ToString() + "0000");            
+        long lTime = long.Parse(timeStamp.ToString() + "0000000");            
         TimeSpan toNow = new TimeSpan(lTime); 
         return dtStart.Add(toNow);        
     } 

@@ -60,7 +60,7 @@ public class ShipManager : SingletonUnity<ShipManager>
 
         if (this.m_ShipDict.Count > 0)
         {
-            CameraController.Instance.LookAtObject = this.m_ShipDict [0];
+            CameraController.Instance.LookAtObject = this.m_ShipDict [1];
         }
     }
 
@@ -82,6 +82,10 @@ public class ShipManager : SingletonUnity<ShipManager>
     /// <param name="oShipParam">ship parameter.</param>
     public void SetShipParam(object oSender, object oShipParam)
     {
+        if(!GlobalManager.Instance.IsGameRunning)
+        {
+            return;
+        }
         Dictionary<int, SShipParam> dShipParam = oShipParam as Dictionary<int, SShipParam>;
         foreach (var item in dShipParam) 
         {

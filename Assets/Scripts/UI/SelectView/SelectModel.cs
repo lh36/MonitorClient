@@ -29,7 +29,8 @@ public class SelectModel : MonoBehaviour
         this.m_InstanceDict.Clear ();
 
         Dictionary<string, InstanceResp> instanceDict = oParam as Dictionary<string, InstanceResp>;
-        foreach (var item in instanceDict) {
+        foreach (var item in instanceDict) 
+        {
             this.m_InstanceDict.Add(int.Parse(item.Key), item.Value);
         }
 
@@ -55,6 +56,7 @@ public class SelectModel : MonoBehaviour
 
     public void SelectInstance(int iID)
     {
+        Debug.Log (iID);
         GlobalManager.Instance.StartInstance (iID, this.m_InstanceDict[iID]);
     }
 }

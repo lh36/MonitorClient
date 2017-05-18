@@ -25,6 +25,7 @@ public class ParamView : MonoBehaviour
     {
 		this.m_Model = this.gameObject.transform.parent.gameObject.GetComponent<GameModel> ();
         SignalManager.Instance.AddHandler (SignalID.ShipParamChanged, this.ShowParam);
+
     }
 
     void FixedUpdate()
@@ -47,6 +48,10 @@ public class ParamView : MonoBehaviour
         }
 
         SShipParam oShipParam = oParam as SShipParam;
+        if(oShipParam == null)
+        {
+            return;
+        }
         this.T_Pos.text = "(" + oShipParam.posX.ToString() + ", " + oShipParam.posY.ToString() + ")";
         this.T_Rud.text = oShipParam.rud.ToString ();
         this.T_Phi.text = oShipParam.phi.ToString ();
@@ -54,7 +59,12 @@ public class ParamView : MonoBehaviour
         this.T_LatLon.text = "(" + oShipParam.lat.ToString() + ", " + oShipParam.lon.ToString() + ")";
         this.T_Gear.text = oShipParam.gear.ToString ();
 
-        this.m_fTime = oShipParam.time - GlobalManager.Instance.GetInstanceData ().time;
+        long lInstanceTime = GlobalManager.Instance.GetInstanceData ().time;
+        if(oShipParam.time > lInstanceTime)
+        {
+            this.m_fTime = oShipParam.time - GlobalManager.Instance.GetInstanceData ().time;
+        }
+
 
     }
 

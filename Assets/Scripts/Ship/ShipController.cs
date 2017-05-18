@@ -3,13 +3,13 @@ using System.Collections;
 
 public class ShipController : MonoBehaviour
 {
-    public float RotateLerp = 1f;   //旋转差值速度
+    public float RotateLerp = 3f;   //旋转差值速度
     public float MoveLerp = 1f;     //移动差值速度
 
     private ShipModel m_Model;      //船Model
 
-    private float m_fCurrentRudAng = 0;     //当前舵角
-    private float m_fDirRudAng = 0;         //目的舵角
+    private float m_fCurrentPhiAng = 0;     //当前航向角
+    private float m_fDirPhiAng = 0;         //目的航向角
     private Vector3 m_v3DirPos = new Vector3();         //目的位置
 
     void Awake()
@@ -42,9 +42,9 @@ public class ShipController : MonoBehaviour
     {
         SShipParam oShipParam = oParam as SShipParam;
         //位置
-        this.m_v3DirPos = new Vector3 (oShipParam.posX, 0, oShipParam.posY);
+        this.m_v3DirPos = new Vector3 ((float)oShipParam.posX, 0, (float)oShipParam.posY);
         //舵角
-        this.m_fDirRudAng = oShipParam.rud;
+        this.m_fDirPhiAng = (float)oShipParam.phi;
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class ShipController : MonoBehaviour
     private void SetShipRudAng()
     {
 		Quaternion currentRotation = this.gameObject.transform.localRotation;
-		Quaternion dirRotation = Quaternion.Euler (-90, 0, this.m_fDirRudAng - 90);
+		Quaternion dirRotation = Quaternion.Euler (-90, 0, -this.m_fDirPhiAng);
 		this.gameObject.transform.localRotation = Quaternion.Lerp (currentRotation, dirRotation, RotateLerp * Time.deltaTime);
     }
 

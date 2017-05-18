@@ -29,12 +29,15 @@ public class CameraController : SingletonUnity<CameraController>
     private Quaternion m_qRotation;             //四元数Y角度值
     private Quaternion m_qXRotation;             //四元数X角度值
 
+    private Vector3 m_v3StartPos;
+
 
 	void Start()
 	{
 		m_v3DistField = gameObject.transform.localPosition;
 		m_fXRotation = CameraCenter.transform.localEulerAngles.y;
 		m_fYRotation = CameraCenter.transform.localEulerAngles.x;
+        m_v3StartPos = CameraCenter.transform.localPosition;
 	}
 
 	void LateUpdate()
@@ -103,6 +106,12 @@ public class CameraController : SingletonUnity<CameraController>
     {
         set {this.LookAt = value;}
         get {return this.LookAt;}
+    }
+
+
+    public void ResetCameraPosition()
+    {
+        CameraCenter.transform.localPosition = this.m_v3StartPos;
     }
 
 }

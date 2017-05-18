@@ -44,19 +44,26 @@ public class GetParamApi{
         }
         else
         {
-            ParamJson paramJson = JsonTool.JsonToClass<ParamJson> (www.downloadHandler.text);
-
             Debug.Log (www.downloadHandler.text);
-
-            if(paramJson.status == true)
+            ParamJson json;
+            try
             {
-                Dictionary<int, SShipParam> dShipParam = new Dictionary<int, SShipParam> ();
-                foreach (var item in paramJson.resp) 
+                json = JsonTool.JsonToClass<ParamJson> (www.downloadHandler.text);
+                if(json.status == true)
                 {
-                    dShipParam.Add (int.Parse (item.Key), item.Value);
-                }
-                this._callback (null, dShipParam);
-            }    
+                    Dictionary<int, SShipParam> dShipParam = new Dictionary<int, SShipParam> ();
+                    foreach (var item in json.resp) 
+                    {
+                        dShipParam.Add (int.Parse (item.Key), item.Value);
+                    }
+                    this._callback (null, dShipParam);
+                } 
+            }
+            catch
+            {
+                Debug.Log ("error");
+            }
+
 
             isDone = true;
         }
@@ -73,17 +80,3 @@ public class ParamJson
 
     public ParamJson(){}
 }
-//public class ParamResp
-//{
-//    public float lat;//经度
-//    public float lon;//纬度
-//    public float posX;//X坐标
-//    public float posY;//Y坐标
-//    public float rudAng;//舵角
-//    public float traAng;//航迹角
-//    public float speed;//船速
-//    public int gear;//船速等级
-//    public long time;//运行时间
-//
-//    public ParamResp(){}
-//}

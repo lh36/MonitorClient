@@ -10,7 +10,7 @@ public class MinimapView : MonoBehaviour
     public GameObject MapBg;
     public GameObject pf_Point;
 
-    private Dictionary<int, GameObject> m_PointDict;
+    private Dictionary<int, GameObject> m_PointDict = new Dictionary<int, GameObject> ();
     private Vector2 m_v2RealMapSize;
     private Vector2 m_v2MinimapSize;
 
@@ -22,7 +22,6 @@ public class MinimapView : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        this.m_PointDict = new Dictionary<int, GameObject> ();
 		this.m_Model = this.gameObject.transform.parent.gameObject.GetComponent<GameModel> ();
 
         this.m_v2RealMapSize = GlobalManager.Instance.MapSize;
@@ -30,6 +29,18 @@ public class MinimapView : MonoBehaviour
 
         SignalManager.Instance.AddHandler (SignalID.ShipParamChanged, this.SetPointPos);
         SignalManager.Instance.AddHandler (SignalID.GameView_ControlChanged, this.SetPointShape);
+    }
+
+    void OnEnable()
+    {
+        if(this.m_PointDict.Count > 0)
+        {
+            foreach(var item in this.m_PointDict)
+            {
+                Destroy (item.Value);
+            }
+            this.m_PointDict.Clear ();
+        }
     }
     
     // Update is called once per frame
@@ -74,8 +85,12 @@ public class MinimapView : MonoBehaviour
         oPoint = this.m_PointDict[iShipID];
         //坐标位置
         SShipParam oShipParam = oParam as SShipParam;
-        float fPosX = oShipParam.posX / this.m_v2RealMapSize.x * this.m_v2MinimapSize.x;
-        float fPosY = oShipParam.posY / this.m_v2RealMapSize.y * this.m_v2MinimapSize.y;
+        if(oShipParam == null)
+        {
+            return;
+        }
+        float fPosX = (float)oShipParam.posX / this.m_v2RealMapSize.x * this.m_v2MinimapSize.x;
+        float fPosY = (float)oShipParam.posY / this.m_v2RealMapSize.y * this.m_v2MinimapSize.y;
         oPoint.transform.localPosition = new Vector3 (fPosX, fPosY, 0);
 
     }
