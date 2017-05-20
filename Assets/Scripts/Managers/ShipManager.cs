@@ -12,8 +12,15 @@ public class ShipManager : SingletonUnity<ShipManager>
     private GetParamApi m_GetParamApi;
 	private Dictionary<int, GameObject> m_ShipDict;
 
+	private int m_ControlShipID = 1;
     private int m_iInstanceID = 0;
     private int m_iUpdateTime = 0;
+
+	public int ControlShipID
+	{
+		get{return this.m_ControlShipID;}
+		set{this.m_ControlShipID = value;}
+	}
 
     void Awake()
     {
@@ -109,11 +116,17 @@ public class ShipManager : SingletonUnity<ShipManager>
 			Destroy (item.Value);
 		}
 		this.m_ShipDict.Clear ();
+		this.m_ControlShipID = 1;
 	}
 
     public GameObject GetShipObjectByID(int iShipID)
     {
         return this.m_ShipDict [iShipID];
     }
+
+	public int GetShipAmount()
+	{
+		return this.m_ShipDict.Count;
+	}
 }
 

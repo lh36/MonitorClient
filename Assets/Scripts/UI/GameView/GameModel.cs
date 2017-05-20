@@ -3,11 +3,11 @@ using System.Collections;
 
 public class GameModel : MonoBehaviour
 {
-    private int m_ControlShipID = 0;
+    private int m_ControlShipID = 1;
 	private SubmitControlApi m_ControlApi;
 
     // Use this for initialization
-    void Start ()
+    void Awake ()
     {
 		this.gameObject.AddComponent<SubmitControlApi> ();
 		this.m_ControlApi = this.gameObject.GetComponent<SubmitControlApi> ();
@@ -35,6 +35,8 @@ public class GameModel : MonoBehaviour
         //参数改变
         SignalManager.Instance.DispatchSignal (SignalID.ShipParamChanged, this.m_ControlShipID, 
             ShipManager.Instance.GetShipObjectByID (this.m_ControlShipID).GetComponent<ShipModel> ().Param);
+
+		ShipManager.Instance.ControlShipID = iShipID;
     }
 
     public int GetControlledShipID()

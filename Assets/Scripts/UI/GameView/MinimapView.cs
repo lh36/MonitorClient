@@ -26,11 +26,13 @@ public class MinimapView : MonoBehaviour
 
         this.m_v2RealMapSize = GlobalManager.Instance.MapSize;
         this.m_v2MinimapSize = this.MapBg.GetComponent<RectTransform> ().sizeDelta;
+		this.m_v2MinimapSize = new Vector2 (this.m_v2MinimapSize.y, this.m_v2MinimapSize.x);
 
         SignalManager.Instance.AddHandler (SignalID.ShipParamChanged, this.SetPointPos);
         SignalManager.Instance.AddHandler (SignalID.GameView_ControlChanged, this.SetPointShape);
-    }
 
+    }
+	
     void OnEnable()
     {
         if(this.m_PointDict.Count > 0)
@@ -46,7 +48,7 @@ public class MinimapView : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-    
+		
     }
 
     private void SetPointShape(object oSender, object oParam)
@@ -80,7 +82,6 @@ public class MinimapView : MonoBehaviour
             oPoint.transform.Find ("Text").gameObject.GetComponent<Text> ().text = iShipID.ToString ();
             //坐标颜色
             SetPointShape (null, this.m_Model.GetControlledShipID());
-            
         }
         oPoint = this.m_PointDict[iShipID];
         //坐标位置
@@ -94,5 +95,7 @@ public class MinimapView : MonoBehaviour
         oPoint.transform.localPosition = new Vector3 (fPosX, fPosY, 0);
 
     }
+
+
 }
 

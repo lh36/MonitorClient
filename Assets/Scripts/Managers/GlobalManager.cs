@@ -10,7 +10,7 @@ public class GlobalManager : SingletonUnity<GlobalManager>
     private int m_iInstanceID = 0;
     private InstanceResp m_Instance;
 	private ConnectInstanceApi m_HeartApi;
-    public Vector2 MapSize = new Vector2 (100, 100);
+    public Vector2 MapSize = new Vector2 (50, 25);
 
     public bool IsGameRunning
     {

@@ -23,7 +23,7 @@ public class ParamView : MonoBehaviour
 
     void Start()
     {
-		this.m_Model = this.gameObject.transform.parent.gameObject.GetComponent<GameModel> ();
+		this.m_Model = this.gameObject.transform.parent.parent.gameObject.GetComponent<GameModel> ();
         SignalManager.Instance.AddHandler (SignalID.ShipParamChanged, this.ShowParam);
 
     }
@@ -52,11 +52,11 @@ public class ParamView : MonoBehaviour
         {
             return;
         }
-        this.T_Pos.text = "(" + oShipParam.posX.ToString() + ", " + oShipParam.posY.ToString() + ")";
-        this.T_Rud.text = oShipParam.rud.ToString ();
-        this.T_Phi.text = oShipParam.phi.ToString ();
-        this.T_Speed.text = oShipParam.speed.ToString ();
-        this.T_LatLon.text = "(" + oShipParam.lat.ToString() + ", " + oShipParam.lon.ToString() + ")";
+		this.T_Pos.text = "(" + oShipParam.posX.ToString("0.000") + ", " + oShipParam.posY.ToString("0.000") + ")";
+		this.T_Rud.text = oShipParam.rud.ToString ("0.000");
+		this.T_Phi.text = oShipParam.phi.ToString ("0.000");
+		this.T_Speed.text = oShipParam.speed.ToString ("0.000");
+		this.T_LatLon.text = "(" + oShipParam.lat.ToString("0.000") + ", " + oShipParam.lon.ToString("0.000") + ")";
         this.T_Gear.text = oShipParam.gear.ToString ();
 
         long lInstanceTime = GlobalManager.Instance.GetInstanceData ().time;
