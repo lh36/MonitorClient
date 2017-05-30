@@ -25,7 +25,7 @@ public class ShipController : MonoBehaviour
 
     void FixedUpdate()
     {
-        SetShipRudAng ();
+        SetShipAng ();
         SetShipPos ();
     }
 
@@ -50,7 +50,7 @@ public class ShipController : MonoBehaviour
     /// <summary>
     /// Sets the ship rud ang.
     /// </summary>
-    private void SetShipRudAng()
+    private void SetShipAng()
     {
 		Quaternion currentRotation = this.gameObject.transform.localRotation;
 		Quaternion dirRotation = Quaternion.Euler (-90, 0, -this.m_fDirPhiAng);

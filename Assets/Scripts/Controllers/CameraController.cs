@@ -47,14 +47,14 @@ public class CameraController : SingletonUnity<CameraController>
             return;
         }
 		CameraCenter.transform.position = LookAt.transform.position;
-		scrollUpdate();
-		rotationUpdate();
+		ScrollUpdate();
+		RotationUpdate();
 	}
 
 	/// <summary>
 	/// 缩放控制
 	/// </summary>
-	private void scrollUpdate()
+	private void ScrollUpdate()
 	{
 		m_fScroll = InputManager.Instance.GetScroll();
 		if(m_fScroll != 0)
@@ -78,7 +78,7 @@ public class CameraController : SingletonUnity<CameraController>
 	/// <summary>
 	/// 旋转控制
 	/// </summary>
-	private void rotationUpdate()
+	private void RotationUpdate()
 	{
 		if(InputManager.Instance.IsRightMouseStay())
 		{
