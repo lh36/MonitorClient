@@ -96,6 +96,20 @@ public class SignalManager : SingletonUnity<SignalManager> {
 		}
 	}
 
+    /// <summary>
+    /// 移除指定的全部信号接收器
+    /// </summary>
+    /// <param name="nSignalID">N signal I.</param>
+    public void RemoveAllHandler(SignalID nSignalID)
+    {
+        if (this.m_HandlerMap.ContainsKey(nSignalID))
+        {
+            var mhc = this.m_HandlerMap[nSignalID];
+            mhc.Dispose();
+            this.m_HandlerMap.Remove(nSignalID);
+        }
+    }
+
 	/// <summary>
 	/// 向所有注册的接收器分发指定信号
 	/// </summary>
@@ -187,4 +201,6 @@ public enum SignalID
     GameView_ControlChanged,
 
     ShipParamChanged,
+
+    ControlClick,
 }

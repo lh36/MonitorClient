@@ -92,7 +92,7 @@ public class MinimapView : MonoBehaviour
         }
         float fPosX = (float)oShipParam.posX / this.m_v2RealMapSize.x * this.m_v2MinimapSize.x;
         float fPosY = (float)oShipParam.posY / this.m_v2RealMapSize.y * this.m_v2MinimapSize.y;
-        oPoint.transform.localPosition = new Vector3 (fPosX, fPosY, 0);
+        oPoint.transform.localPosition = new Vector3 (fPosY, fPosX, 0);
 
     }
 

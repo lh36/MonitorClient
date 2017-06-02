@@ -51,5 +51,80 @@ public class GameModel : MonoBehaviour
 			StartCoroutine (m_ControlApi.Request (GlobalManager.Instance.GetInstanceID (), sControlData));
 		}
 	}
+
+    public void StartOpenControl()
+    {
+        SignalManager.Instance.RemoveAllHandler (SignalID.ControlClick);
+    }
+
+    public void StartPointControl()
+    {
+        SignalManager.Instance.AddHandler (SignalID.ControlClick, this.PointControl);
+    }
+
+    private void PointControl(object oSender, object oParam)
+    {
+        var v2Point = oParam as Vector2;
+        SubmitControl ("c-" + this.m_ControlShipID.ToString () + "-p-1-" + v2Point.x.ToString() + "-" + v2Point.y.ToString());
+    }
+
+    public void StartSpecialLineControl()
+    {
+        SignalManager.Instance.RemoveAllHandler (SignalID.ControlClick);
+        SignalManager.Instance.AddHandler (SignalID.ControlClick, this.PointControl);
+    }
+
+    private void SpecialLineControl(object oSender, object oParam)
+    {
+        SubmitControl ("c-" + this.m_ControlShipID.ToString () + "-l-" + (float)oParam.ToString());
+    }
+
+    public void StartGenLineControl()
+    {
+        SignalManager.Instance.RemoveAllHandler (SignalID.ControlClick);
+        SignalManager.Instance.AddHandler (SignalID.ControlClick, this.PointControl);
+    }
+
+    private void SpecialLineControl(object oSender, object oParam)
+    {
+        var v2Point = oParam as Vector2;
+        SubmitControl ("c-" + this.m_ControlShipID.ToString () + "-p-1-" + v2Point.x.ToString() + "-" + v2Point.y.ToString());
+    }
+
+    public void StartMulLineControl()
+    {
+        SignalManager.Instance.RemoveAllHandler (SignalID.ControlClick);
+        SignalManager.Instance.AddHandler (SignalID.ControlClick, this.PointControl);
+    }
+
+    private void SpecialLineControl(object oSender, object oParam)
+    {
+        var v2Point = oParam as Vector2;
+        SubmitControl ("c-" + this.m_ControlShipID.ToString () + "-p-1-" + v2Point.x.ToString() + "-" + v2Point.y.ToString());
+    }
+
+    public void StartCircleControl()
+    {
+        SignalManager.Instance.RemoveAllHandler (SignalID.ControlClick);
+        SignalManager.Instance.AddHandler (SignalID.ControlClick, this.PointControl);
+    }
+
+    private void SpecialLineControl(object oSender, object oParam)
+    {
+        var v2Point = oParam as Vector2;
+        SubmitControl ("c-" + this.m_ControlShipID.ToString () + "-p-1-" + v2Point.x.ToString() + "-" + v2Point.y.ToString());
+    }
+
+    public void StartFormationControl()
+    {
+        SignalManager.Instance.RemoveAllHandler (SignalID.ControlClick);
+        SignalManager.Instance.AddHandler (SignalID.ControlClick, this.PointControl);
+    }
+
+    private void SpecialLineControl(object oSender, object oParam)
+    {
+        var v2Point = oParam as Vector2;
+        SubmitControl ("c-" + this.m_ControlShipID.ToString () + "-p-1-" + v2Point.x.ToString() + "-" + v2Point.y.ToString());
+    }
 }
 
