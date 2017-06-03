@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class InputManager : SingletonUnity<InputManager>
 {
@@ -15,13 +16,22 @@ public class InputManager : SingletonUnity<InputManager>
 	private Vector2 m_OldPosition1 = new Vector2();
 	private Vector2 m_OldPosition2 = new Vector2();
 
+	private ControlMode m_ControlMode = ControlMode.OpenControl;
+	private List<Vector2> m_ClickPointList = new List<Vector2> ();
+
+	public Transform Trans_RightView;
+	private float m_RightViewPosX;
+
 	void Start()
 	{
 		Input.multiTouchEnabled = true;
+		this.m_RightViewPosX = Trans_RightView.position.x - Trans_RightView.gameObject.GetComponent<RectTransform> ().sizeDelta.x / 2;
 	}
 
 	void Update () 
 	{
+		ControlInput ();
+
 		if(GlobalManager.Instance.IsGameRunning)
 		{
 			if(Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor)
@@ -166,15 +176,91 @@ public class InputManager : SingletonUnity<InputManager>
 		return m_v2MouseXYDelta;
 	}
 
-    void FixedUpdate()
-    {
-        if(GlobalManager.Instance.IsGameRunning)
-        {
-            //input something
-        }
+	public void SetControlMode(ControlMode controlMode)
+	{
+		this.m_ClickPointList.Clear ();
+		this.m_ControlMode = controlMode;
+	}
 
+	private void ControlInput()
+	{
+		if(Input.GetMouseButtonUp(0))
+		{
+			if(Input.mousePosition.x > this.m_RightViewPosX)
+			{
+				return;
+			}
 
-    }
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Debug.Log ("raypos" + Input.mousePosition.ToString ());
+			RaycastHit hitInfo;
+			if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Water") ))
+			{
+				GameObject gameObj = hitInfo.collider.gameObject;
+				Vector3 hitPoint = hitInfo.point;
+				Debug.Log ("ray" + hitPoint.ToString ());
+				this.m_ClickPointList.Add (new Vector2 (hitPoint.x, hitPoint.z));
+			}
+		}
+
+		switch(this.m_ControlMode)
+		{
+		case ControlMode.OpenControl:
+			break;
+		case ControlMode.PointControl:
+			if(this.m_ClickPointList.Count == 1)
+			{
+				SignalManager.Instance.DispatchSignal (SignalID.ControlClick, null, this.m_ClickPointList [0]);
+			}
+			break;
+		case ControlMode.SpecialLineControl:
+			if(this.m_ClickPointList.Count == 1)
+			{
+				SignalManager.Instance.DispatchSignal (SignalID.ControlClick, null, this.m_ClickPointList [0].y);
+			}
+			break;
+		case ControlMode.GenLineControl:
+			if(this.m_ClickPointList.Count == 2)
+			{
+				SignalManager.Instance.DispatchSignal (SignalID.ControlClick, null, this.m_ClickPointList);
+			}
+			break;
+		case ControlMode.MulLineControl:
+			
+			break;
+		case ControlMode.CircleControl:
+			if(this.m_ClickPointList.Count == 1)
+			{
+				float fRadius = Mathf.Sqrt (Mathf.Pow (this.m_ClickPointList [0].x - GlobalManager.Instance.MapSize.x / 2, 2) +
+					                		Mathf.Pow (this.m_ClickPointList [0].y - GlobalManager.Instance.MapSize.y / 2, 2));
+				SignalManager.Instance.DispatchSignal (SignalID.ControlClick, null, fRadius);
+			}
+			break;
+		case ControlMode.FormationControl:
+			break;
+		default:
+			break;
+		}
+	}
+
+	public void ControlOK()
+	{
+		if(this.m_ControlMode == ControlMode.MulLineControl || this.m_ControlMode == ControlMode.FormationControl)
+		{
+			SignalManager.Instance.DispatchSignal (SignalID.ControlClick, null, this.m_ClickPointList);
+		}
+	}
 
 }
 
+
+public enum ControlMode
+{
+	OpenControl,
+	PointControl,
+	SpecialLineControl,
+	GenLineControl,
+	MulLineControl,
+	CircleControl,
+	FormationControl,
+}

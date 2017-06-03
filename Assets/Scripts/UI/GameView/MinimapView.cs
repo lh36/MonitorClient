@@ -9,6 +9,10 @@ public class MinimapView : MonoBehaviour
 
     public GameObject MapBg;
     public GameObject pf_Point;
+	public RawImage VideoImage;
+	public int RequestFPS = 5;
+	private GetVideoDataApi m_VideoApi;
+	private int m_iUpdateTime = 0;
 
     private Dictionary<int, GameObject> m_PointDict = new Dictionary<int, GameObject> ();
     private Vector2 m_v2RealMapSize;
@@ -16,7 +20,10 @@ public class MinimapView : MonoBehaviour
 
     void Awake()
     {
-        
+		var v2Size = VideoImage.gameObject.GetComponent<RectTransform> ().sizeDelta;
+
+		this.m_VideoApi = new GetVideoDataApi ();
+		this.m_VideoApi.AddCallback ((int)v2Size.x, (int)v2Size.y, this.SetVideoImage);
     }
 
     // Use this for initialization
@@ -48,7 +55,16 @@ public class MinimapView : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-		
+		if (this.m_iUpdateTime >= this.RequestFPS)
+		{
+			if (GlobalManager.Instance.IsGameRunning && this.m_VideoApi.IsIdle())
+			{
+				StartCoroutine (this.m_VideoApi.Request ());
+				this.m_iUpdateTime = 0;
+			}
+		}
+
+		this.m_iUpdateTime += 1;
     }
 
     private void SetPointShape(object oSender, object oParam)
@@ -96,6 +112,12 @@ public class MinimapView : MonoBehaviour
 
     }
 
+
+	private void SetVideoImage(object oSender, object oParam)
+	{
+		var texture = oParam as Texture2D;
+		VideoImage.texture = texture;
+	}
 
 }
 

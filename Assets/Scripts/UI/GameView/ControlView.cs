@@ -50,9 +50,13 @@ public class ControlView : MonoBehaviour
 			this.m_Model.SubmitControl (GetCommandData());
 		});
 
-        Dd_CloseControl.onValueChanged.AddListener(delegate {
-            
-        })
+		Dd_CloseControl.onValueChanged.AddListener (delegate {
+			this.OnDropValueChanged ();
+		});
+
+		Btn_OK.onClick.AddListener (delegate {
+			InputManager.Instance.ControlOK ();
+		});
 	}
 
 	private string GetCommandData()
