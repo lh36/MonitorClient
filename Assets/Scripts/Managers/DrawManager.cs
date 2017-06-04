@@ -81,12 +81,21 @@ public class DrawManager : SingletonUnity<DrawManager>
 			DrawNone ();
 			break;
 		case 1:
-			DrawLine (oRefLineData);
+			DrawSpecialLine (oRefLineData);
 			break;
 		case 2:
 			Vector3 v3CenterPoint = new Vector3 ((float)oRefLineData.posX, Height, (float)oRefLineData.posY);
 			var pointsList = CalculatePoints (v3CenterPoint, (float)oRefLineData.radius);
 			DrawCircle (this.m_RefLineRenderer, pointsList);
+			break;
+		case 3:
+			DrawlLine (oRefLineData);
+			break;
+		case 4:
+			DrawlLine (oRefLineData);
+			break;
+		case 5:
+			DrawPoint (oRefLineData);
 			break;
 		default:
 			break;
@@ -102,10 +111,10 @@ public class DrawManager : SingletonUnity<DrawManager>
 	}
 
 	/// <summary>
-	/// 画线
+	/// 画特殊线
 	/// </summary>
 	/// <param name="oRefLineData">O reference line data.</param>
-	private void DrawLine(RefLineData oRefLineData)
+	private void DrawSpecialLine(RefLineData oRefLineData)
 	{
 		this.m_RefLineRenderer.SetVertexCount (2);
 		this.m_RefLineRenderer.SetPosition (0, new Vector3 (0, Height, (float)oRefLineData.posY));
@@ -113,9 +122,40 @@ public class DrawManager : SingletonUnity<DrawManager>
 	}
 
 	/// <summary>
-	/// 画圆
+	/// 画线
 	/// </summary>
 	/// <param name="oRefLineData">O reference line data.</param>
+	private void DrawlLine(RefLineData oRefLineData)
+	{
+		var pointList = oRefLineData.points;
+		var iCount = pointList.Count;
+		if(iCount < 2)
+		{
+			return;
+		}
+		this.m_RefLineRenderer.SetVertexCount (iCount / 2);
+		for(int i=0; i<iCount/2; i++)
+		{
+			this.m_RefLineRenderer.SetPosition (i, new Vector3 (float.Parse(pointList[2*i]), Height, float.Parse(pointList[2*i + 1])));
+		}
+	}
+
+	/// <summary>
+	/// 画点
+	/// </summary>
+	/// <param name="oRefLineData">O reference line data.</param>
+	private void DrawPoint(RefLineData oRefLineData)
+	{
+		Vector3 v3CenterPoint = new Vector3 ((float)oRefLineData.posX, Height, (float)oRefLineData.posY);
+		var pointsList = CalculatePoints (v3CenterPoint, 0.3f);
+		DrawCircle (this.m_RefLineRenderer, pointsList);
+	}
+
+	/// <summary>
+	/// 画圆
+	/// </summary>
+	/// <param name="oLineRenderer">O line renderer.</param>
+	/// <param name="pointsList">Points list.</param>
 	private void DrawCircle(LineRenderer oLineRenderer, List<Vector3> pointsList)
 	{
 		oLineRenderer.SetVertexCount (CirclePointCount + 1);

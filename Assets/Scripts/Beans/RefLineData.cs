@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 public class RefLineData
 {
@@ -6,6 +7,7 @@ public class RefLineData
 	public double posX = 0;
 	public double posY = 0;
 	public double radius = 0;
+	public List<string> points = new List<string>();
 
 	/// <summary>
 	/// 开环参考线数据
