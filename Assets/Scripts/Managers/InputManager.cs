@@ -192,13 +192,11 @@ public class InputManager : SingletonUnity<InputManager>
 			}
 
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			Debug.Log ("raypos" + Input.mousePosition.ToString ());
 			RaycastHit hitInfo;
 			if (Physics.Raycast(ray, out hitInfo, 2000, LayerMask.GetMask("Water") ))
 			{
 				GameObject gameObj = hitInfo.collider.gameObject;
 				Vector3 hitPoint = hitInfo.point;
-				Debug.Log ("ray" + hitPoint.ToString ());
 				this.m_ClickPointList.Add (new Vector2 (hitPoint.x, hitPoint.z));
 			}
 		}

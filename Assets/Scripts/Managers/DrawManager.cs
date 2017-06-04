@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class DrawManager : MonoBehaviour
+public class DrawManager : SingletonUnity<DrawManager>
 {
 	public float Height = 0.1f;
 	public int CirclePointCount = 10;
@@ -10,6 +10,7 @@ public class DrawManager : MonoBehaviour
 	public LineRenderer m_RefLineRenderer;
 	public LineRenderer m_MapLineRenderer;
 	public LineRenderer m_ShipLineRenderer;
+	public LineRenderer m_ControlLineRenderer;
 
 	private int m_iUpdateTime = 0;
 	private GetRefLineApi m_GetRefLineApi;

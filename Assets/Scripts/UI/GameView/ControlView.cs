@@ -16,8 +16,10 @@ public class ControlView : MonoBehaviour
 	public InputField IF_Command;
     public Dropdown Dd_CloseControl;
     public Button Btn_OK;
+	public Button Btn_ClearTrack;
 
 	private GameModel m_Model;
+	private bool m_bIsOpenControl = true;
 
 	// Use this for initialization
 	void Start ()
@@ -31,16 +33,28 @@ public class ControlView : MonoBehaviour
 			this.m_Model.SubmitControl ("closelink");
 		});
 		Btn_Front.onClick.AddListener (delegate {
-			this.m_Model.SubmitControl ("o-" + this.m_Model.GetControlledShipID ().ToString () + "-w");
+			if(this.m_bIsOpenControl)
+			{
+				this.m_Model.SubmitControl ("o-" + this.m_Model.GetControlledShipID ().ToString () + "-w");
+			}
 		});
 		Btn_Back.onClick.AddListener (delegate {
+			if(this.m_bIsOpenControl)
+			{
 			this.m_Model.SubmitControl ("o-" + this.m_Model.GetControlledShipID ().ToString () + "-s");
+			}
 		});
 		Btn_Left.onClick.AddListener (delegate {
+			if(this.m_bIsOpenControl)
+			{
 			this.m_Model.SubmitControl ("o-" + this.m_Model.GetControlledShipID ().ToString () + "-a");
+			}
 		});
 		Btn_Right.onClick.AddListener (delegate {
+			if(this.m_bIsOpenControl)
+			{
 			this.m_Model.SubmitControl ("o-" + this.m_Model.GetControlledShipID ().ToString () + "-d");
+			}
 		});
 		Btn_Stop.onClick.AddListener (delegate {
 			this.m_Model.SubmitControl ("s");
@@ -57,6 +71,10 @@ public class ControlView : MonoBehaviour
 		Btn_OK.onClick.AddListener (delegate {
 			InputManager.Instance.ControlOK ();
 		});
+
+		Btn_ClearTrack.onClick.AddListener (delegate {
+			DrawManager.Instance.ClearTrack (this.m_Model.GetControlledShipID ());
+		});
 	}
 
 	private string GetCommandData()
@@ -70,33 +88,33 @@ public class ControlView : MonoBehaviour
         var iValue = Dd_CloseControl.value;
         switch(iValue)
         {
-        case 0:
-            OpenControl.SetActive (true);
+		case 0:
+			this.m_bIsOpenControl = true;
             this.m_Model.StartOpenControl ();
             break;
         case 1:
-            OpenControl.SetActive (false);
+			this.m_bIsOpenControl = false;
             this.m_Model.StartPointControl ();
             break;
         case 2:
             this.m_Model.StartSpecialLineControl ();
-            OpenControl.SetActive (false);
+			this.m_bIsOpenControl = false;
             break;
         case 3:
             this.m_Model.StartGenLineControl ();
-            OpenControl.SetActive (false);
+			this.m_bIsOpenControl = false;
             break;
         case 4:
             this.m_Model.StartMulLineControl ();
-            OpenControl.SetActive (false);
+			this.m_bIsOpenControl = false;
             break;
         case 5:
             this.m_Model.StartCircleControl ();
-            OpenControl.SetActive (false);
+			this.m_bIsOpenControl = false;
             break;
         case 6:
             this.m_Model.StartFormationControl ();
-            OpenControl.SetActive (false);
+			this.m_bIsOpenControl = false;
             break;
         default:
             break;
