@@ -90,31 +90,38 @@ public class ControlView : MonoBehaviour
         {
 		case 0:
 			this.m_bIsOpenControl = true;
-            this.m_Model.StartOpenControl ();
+			this.m_Model.StartOpenControl ();
+			DrawManager.Instance.DrawControlLine (ControlMode.OpenControl);
             break;
         case 1:
 			this.m_bIsOpenControl = false;
             this.m_Model.StartPointControl ();
+			DrawManager.Instance.DrawControlLine (ControlMode.PointControl);
             break;
         case 2:
             this.m_Model.StartSpecialLineControl ();
 			this.m_bIsOpenControl = false;
+			DrawManager.Instance.DrawControlLine (ControlMode.SpecialLineControl);
             break;
         case 3:
             this.m_Model.StartGenLineControl ();
 			this.m_bIsOpenControl = false;
+			DrawManager.Instance.DrawControlLine (ControlMode.GenLineControl);
             break;
         case 4:
             this.m_Model.StartMulLineControl ();
 			this.m_bIsOpenControl = false;
+			DrawManager.Instance.DrawControlLine (ControlMode.MulLineControl);
             break;
         case 5:
             this.m_Model.StartCircleControl ();
 			this.m_bIsOpenControl = false;
+			DrawManager.Instance.DrawControlLine (ControlMode.CircleControl);
             break;
         case 6:
             this.m_Model.StartFormationControl ();
 			this.m_bIsOpenControl = false;
+			DrawManager.Instance.DrawControlLine (ControlMode.OpenControl);
             break;
         default:
             break;

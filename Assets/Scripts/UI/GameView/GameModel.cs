@@ -108,7 +108,7 @@ public class GameModel : MonoBehaviour
 	private void GenLineControl(object oSender, object oParam)
     {
         var pointList = oParam as List<Vector2>;
-		SubmitControl ("c&" + this.m_ControlShipID.ToString () + "&g&2-" + 
+		SubmitControl ("c&" + this.m_ControlShipID.ToString () + "&g&2&" + 
 			pointList[0].x.ToString() + "&" + pointList[0].y.ToString() + 
 			"&" + pointList[1].x.ToString() + "&" + pointList[1].y.ToString()
 		);

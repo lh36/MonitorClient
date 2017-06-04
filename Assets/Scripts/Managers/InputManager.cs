@@ -197,7 +197,20 @@ public class InputManager : SingletonUnity<InputManager>
 			{
 				GameObject gameObj = hitInfo.collider.gameObject;
 				Vector3 hitPoint = hitInfo.point;
-				this.m_ClickPointList.Add (new Vector2 (hitPoint.x, hitPoint.z));
+
+				switch(this.m_ControlMode)
+				{
+				case ControlMode.OpenControl:
+					break;
+				case ControlMode.CircleControl:
+					this.m_ClickPointList.Add (new Vector2 (hitPoint.x, hitPoint.z));
+					break;
+				default:
+					if ((hitPoint.x > 2 && hitPoint.x < 46) && (hitPoint.z > 1 && hitPoint.z < 14)) {
+						this.m_ClickPointList.Add (new Vector2 (hitPoint.x, hitPoint.z));
+					}
+					break;
+				}
 			}
 		}
 
@@ -229,9 +242,16 @@ public class InputManager : SingletonUnity<InputManager>
 		case ControlMode.CircleControl:
 			if(this.m_ClickPointList.Count == 1)
 			{
-				float fRadius = Mathf.Sqrt (Mathf.Pow (this.m_ClickPointList [0].x - GlobalManager.Instance.MapSize.x / 2, 2) +
-					                		Mathf.Pow (this.m_ClickPointList [0].y - GlobalManager.Instance.MapSize.y / 2, 2));
-				SignalManager.Instance.DispatchSignal (SignalID.ControlClick, null, fRadius);
+				float fRadius = Mathf.Sqrt (Mathf.Pow (this.m_ClickPointList [0].x - 24, 2) +
+					                		Mathf.Pow (this.m_ClickPointList [0].y - 8, 2));
+				if(fRadius >4 && fRadius < 6)
+				{
+					SignalManager.Instance.DispatchSignal (SignalID.ControlClick, null, fRadius);
+				}
+				else
+				{
+					this.m_ClickPointList.Clear ();
+				}
 			}
 			break;
 		case ControlMode.FormationControl:

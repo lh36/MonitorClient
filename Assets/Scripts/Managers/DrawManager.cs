@@ -11,6 +11,7 @@ public class DrawManager : SingletonUnity<DrawManager>
 	public LineRenderer m_MapLineRenderer;
 	public LineRenderer m_ShipLineRenderer;
 	public LineRenderer m_ControlLineRenderer;
+	public LineRenderer m_ControlCircleRenderer;
 
 	private int m_iUpdateTime = 0;
 	private GetRefLineApi m_GetRefLineApi;
@@ -83,7 +84,9 @@ public class DrawManager : SingletonUnity<DrawManager>
 			DrawLine (oRefLineData);
 			break;
 		case 2:
-			DrawCircle (oRefLineData);
+			Vector3 v3CenterPoint = new Vector3 ((float)oRefLineData.posX, Height, (float)oRefLineData.posY);
+			var pointsList = CalculatePoints (v3CenterPoint, (float)oRefLineData.radius);
+			DrawCircle (this.m_RefLineRenderer, pointsList);
 			break;
 		default:
 			break;
@@ -113,33 +116,32 @@ public class DrawManager : SingletonUnity<DrawManager>
 	/// 画圆
 	/// </summary>
 	/// <param name="oRefLineData">O reference line data.</param>
-	private void DrawCircle(RefLineData oRefLineData)
+	private void DrawCircle(LineRenderer oLineRenderer, List<Vector3> pointsList)
 	{
-		this.m_RefLineRenderer.SetVertexCount (CirclePointCount + 1);
-		var pointsList = CalculatePoints (oRefLineData);
+		oLineRenderer.SetVertexCount (CirclePointCount + 1);
+
 		for(int i=0; i < CirclePointCount; i++)
 		{
-			this.m_RefLineRenderer.SetPosition (i, pointsList [i]);
+			oLineRenderer.SetPosition (i, pointsList [i]);
 		}
 		if (pointsList.Count > 0)
 		{
-			this.m_RefLineRenderer.SetPosition (CirclePointCount, pointsList [0]);
+			oLineRenderer.SetPosition (CirclePointCount, pointsList [0]);
 		}
 	}
 
-	private List<Vector3> CalculatePoints(RefLineData oRefLineData)
+	private List<Vector3> CalculatePoints(Vector3 v3CenterPoint, float fRadius)
 	{
 		float angle = 360f / CirclePointCount;
 		var pointsList = new List<Vector3> ();
-		Vector3 v3CenterPoint = new Vector3 ((float)oRefLineData.posX, Height, (float)oRefLineData.posY);
 		transform.position = v3CenterPoint;
-		Vector3 v = transform.position + transform.forward * (float)oRefLineData.radius;
+		Vector3 v = transform.position + transform.forward * fRadius;
 		pointsList.Add (v);
 		Quaternion r = transform.rotation;
 		for(int i=1; i < CirclePointCount; i++)
 		{
 			Quaternion q = Quaternion.Euler (r.eulerAngles.x, r.eulerAngles.y - (angle * i), r.eulerAngles.z);
-			v = transform.position + (q * Vector3.forward) * (float)oRefLineData.radius;
+			v = transform.position + (q * Vector3.forward) * fRadius;
 			pointsList.Add (v);
 		}
 
@@ -212,6 +214,33 @@ public class DrawManager : SingletonUnity<DrawManager>
 			this.m_ShipTrackDict [iShipID].Clear ();
 		}
 		TrackDraw (iShipID, null);
+	}
+
+	public void DrawControlLine(ControlMode eMode)
+	{
+		switch(eMode)
+		{
+		case ControlMode.OpenControl:
+			m_ControlLineRenderer.SetVertexCount (0);
+			m_ControlCircleRenderer.SetVertexCount (0);
+			break;
+		case ControlMode.CircleControl:
+			Vector3 v3CenterPoint = new Vector3 (24f, Height, 8f);
+			var pointsList = CalculatePoints (v3CenterPoint, 4);
+			DrawCircle (this.m_ControlLineRenderer, pointsList);
+			pointsList = CalculatePoints (v3CenterPoint, 6);
+			DrawCircle (this.m_ControlCircleRenderer, pointsList);
+			break;
+		default:
+			m_ControlCircleRenderer.SetVertexCount (0);
+			m_ControlLineRenderer.SetVertexCount (5);
+			m_ControlLineRenderer.SetPosition (0, new Vector3 (2f, Height, 1f));
+			m_ControlLineRenderer.SetPosition (1, new Vector3 (2f, Height, 14f));
+			m_ControlLineRenderer.SetPosition (2, new Vector3 (46f, Height, 14f));
+			m_ControlLineRenderer.SetPosition (3, new Vector3 (46f, Height, 1f));
+			m_ControlLineRenderer.SetPosition (4, new Vector3 (2f, Height, 1f));
+			break;
+		}
 	}
 }
 
