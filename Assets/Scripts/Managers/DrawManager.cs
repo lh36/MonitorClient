@@ -207,7 +207,10 @@ public class DrawManager : SingletonUnity<DrawManager>
 
 	public void ClearTrack(int iShipID)
 	{
-		this.m_ShipTrackDict [iShipID].Clear ();
+		if(this.m_ShipTrackDict.ContainsKey(iShipID))
+		{
+			this.m_ShipTrackDict [iShipID].Clear ();
+		}
 		TrackDraw (iShipID, null);
 	}
 }

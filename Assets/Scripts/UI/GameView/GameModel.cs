@@ -75,7 +75,7 @@ public class GameModel : MonoBehaviour
     private void PointControl(object oSender, object oParam)
     {
         var v2Point = (Vector2) oParam;
-        SubmitControl ("c-" + this.m_ControlShipID.ToString () + "-p-1-" + v2Point.x.ToString() + "-" + v2Point.y.ToString());
+		SubmitControl ("c&" + this.m_ControlShipID.ToString () + "&p&1-" + v2Point.x.ToString() + "&" + v2Point.y.ToString());
 		InputManager.Instance.SetControlMode (ControlMode.PointControl);
     }
 
@@ -91,7 +91,7 @@ public class GameModel : MonoBehaviour
 
     private void SpecialLineControl(object oSender, object oParam)
     {
-		SubmitControl ("c-" + this.m_ControlShipID.ToString () + "-l-" + ((float)oParam).ToString());
+		SubmitControl ("c&" + this.m_ControlShipID.ToString () + "&l&" + ((float)oParam).ToString());
 		InputManager.Instance.SetControlMode (ControlMode.SpecialLineControl);
     }
 
@@ -108,9 +108,9 @@ public class GameModel : MonoBehaviour
 	private void GenLineControl(object oSender, object oParam)
     {
         var pointList = oParam as List<Vector2>;
-		SubmitControl ("c-" + this.m_ControlShipID.ToString () + "-g-2-" + 
-			pointList[0].x.ToString() + "-" + pointList[0].y.ToString() + 
-			"-" + pointList[1].x.ToString() + "-" + pointList[1].y.ToString()
+		SubmitControl ("c&" + this.m_ControlShipID.ToString () + "&g&2-" + 
+			pointList[0].x.ToString() + "&" + pointList[0].y.ToString() + 
+			"&" + pointList[1].x.ToString() + "&" + pointList[1].y.ToString()
 		);
 		InputManager.Instance.SetControlMode (ControlMode.GenLineControl);
     }
@@ -134,10 +134,10 @@ public class GameModel : MonoBehaviour
 			return;
 		}
 
-		string sCommand = "c-" + this.m_ControlShipID.ToString () + "-m-" + n.ToString();
+		string sCommand = "c&" + this.m_ControlShipID.ToString () + "&m&" + n.ToString();
 		for(int i=0; i < n; i++)
 		{
-			sCommand += "-" + pointList [i].x.ToString () + "-" + pointList [i].y.ToString ();
+			sCommand += "&" + pointList [i].x.ToString () + "&" + pointList [i].y.ToString ();
 		}
 
         SubmitControl (sCommand);
@@ -156,7 +156,7 @@ public class GameModel : MonoBehaviour
 
 	private void CircleControl(object oSender, object oParam)
     {
-		SubmitControl ("c-" + this.m_ControlShipID.ToString () + "-r-" + ((float)oParam).ToString());
+		SubmitControl ("c&" + this.m_ControlShipID.ToString () + "&r&" + ((float)oParam).ToString());
 		InputManager.Instance.SetControlMode (ControlMode.CircleControl);
     }
 
@@ -172,7 +172,7 @@ public class GameModel : MonoBehaviour
 
 	private void FormationControl(object oSender, object oParam)
     {
-        SubmitControl ("c-4-f");
+		SubmitControl ("c&4&f");
 		InputManager.Instance.SetControlMode (ControlMode.FormationControl);
     }
 }

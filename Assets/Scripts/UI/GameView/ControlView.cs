@@ -35,25 +35,25 @@ public class ControlView : MonoBehaviour
 		Btn_Front.onClick.AddListener (delegate {
 			if(this.m_bIsOpenControl)
 			{
-				this.m_Model.SubmitControl ("o-" + this.m_Model.GetControlledShipID ().ToString () + "-w");
+				this.m_Model.SubmitControl ("o&" + this.m_Model.GetControlledShipID ().ToString () + "&w");
 			}
 		});
 		Btn_Back.onClick.AddListener (delegate {
 			if(this.m_bIsOpenControl)
 			{
-			this.m_Model.SubmitControl ("o-" + this.m_Model.GetControlledShipID ().ToString () + "-s");
+				this.m_Model.SubmitControl ("o&" + this.m_Model.GetControlledShipID ().ToString () + "&s");
 			}
 		});
 		Btn_Left.onClick.AddListener (delegate {
 			if(this.m_bIsOpenControl)
 			{
-			this.m_Model.SubmitControl ("o-" + this.m_Model.GetControlledShipID ().ToString () + "-a");
+				this.m_Model.SubmitControl ("o&" + this.m_Model.GetControlledShipID ().ToString () + "&a");
 			}
 		});
 		Btn_Right.onClick.AddListener (delegate {
 			if(this.m_bIsOpenControl)
 			{
-			this.m_Model.SubmitControl ("o-" + this.m_Model.GetControlledShipID ().ToString () + "-d");
+				this.m_Model.SubmitControl ("o&" + this.m_Model.GetControlledShipID ().ToString () + "&d");
 			}
 		});
 		Btn_Stop.onClick.AddListener (delegate {
