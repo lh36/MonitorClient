@@ -75,7 +75,7 @@ public class GameModel : MonoBehaviour
     private void PointControl(object oSender, object oParam)
     {
         var v2Point = (Vector2) oParam;
-		SubmitControl ("c&" + this.m_ControlShipID.ToString () + "&p&1-" + v2Point.x.ToString() + "&" + v2Point.y.ToString());
+		SubmitControl ("c&" + this.m_ControlShipID.ToString () + "&p&1&" + v2Point.x.ToString() + "&" + v2Point.y.ToString());
 		InputManager.Instance.SetControlMode (ControlMode.PointControl);
     }
 
