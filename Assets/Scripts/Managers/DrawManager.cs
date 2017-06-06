@@ -207,10 +207,7 @@ public class DrawManager : SingletonUnity<DrawManager>
 	private void TrackDraw(object oSender, object oParam)
 	{
 		var iShipID = (int)oSender;
-		if(ShipManager.Instance.ControlShipID != iShipID)
-		{
-			return;
-		}
+
 		if(oParam != null)
 		{
 			if(! this.m_ShipTrackDict.ContainsKey(iShipID))
@@ -234,16 +231,16 @@ public class DrawManager : SingletonUnity<DrawManager>
 			}
 		}
 
-		if(! this.m_ShipTrackDict.ContainsKey(iShipID))
+		if(! this.m_ShipTrackDict.ContainsKey(ShipManager.Instance.ControlShipID))
 		{
 			return;
 		}
 
-		var iLength = this.m_ShipTrackDict[iShipID].Count;
+		var iLength = this.m_ShipTrackDict[ShipManager.Instance.ControlShipID].Count;
 		this.m_ShipLineRenderer.SetVertexCount (iLength);
 		for(int i=0; i < iLength; i++)
 		{
-			this.m_ShipLineRenderer.SetPosition (i, this.m_ShipTrackDict[iShipID][i]);
+			this.m_ShipLineRenderer.SetPosition (i, this.m_ShipTrackDict[ShipManager.Instance.ControlShipID][i]);
 		}
 	}
 

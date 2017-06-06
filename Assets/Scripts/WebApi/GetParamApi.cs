@@ -10,7 +10,7 @@ public class GetParamApi{
     private UnityWebRequest www = null;
     private SignalCallback _callback;
 
-    public bool isDone = false;
+	public bool isDone = true;
 
     public void AddCallback(SignalCallback _callback)
     {
@@ -63,10 +63,9 @@ public class GetParamApi{
             {
                 Debug.Log ("error");
             }
-
-
-            isDone = true;
         }
+
+		isDone = true;
 
     }
         

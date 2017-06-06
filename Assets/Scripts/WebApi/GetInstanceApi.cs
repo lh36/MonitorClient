@@ -10,7 +10,7 @@ public class GetInstanceApi{
     private UnityWebRequest www = null;
     private SignalCallback _callback;
 
-    public bool isDone = false;
+	public bool isDone = true;
 
 
     public void AddCallback(SignalCallback _callback)
@@ -54,9 +54,9 @@ public class GetInstanceApi{
                 //回调
                 this._callback(null, resp);
             }    
-
-            isDone = true;
         }
+
+		isDone = true;
 
     }
 

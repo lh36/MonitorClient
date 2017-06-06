@@ -11,7 +11,7 @@ public class SubmitControlApi : MonoBehaviour
 	private UnityWebRequest www = null;
 	private SignalCallback _callback;
 
-	public bool isDone = false;
+	public bool isDone = true;
 
 	public void AddCallback(SignalCallback _callback)
 	{
@@ -51,19 +51,9 @@ public class SubmitControlApi : MonoBehaviour
 		else
 		{
 			Debug.Log (www.downloadHandler.text);
-
-			/*ControlJson json = JsonTool.JsonToClass<ControlJson> (www.downloadHandler.text);
-
-			
-
-			if(json.status == true)
-			{
-				
-			}    */
-
-			isDone = true;
 		}
 
+		isDone = true;
 	}
 }
 

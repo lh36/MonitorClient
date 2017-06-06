@@ -11,7 +11,7 @@ public class ConnectInstanceApi : MonoBehaviour
 	private UnityWebRequest www = null;
 	private SignalCallback _callback;
 
-	public bool isDone = false;
+	public bool isDone = true;
 
 
 	public void AddCallback(SignalCallback _callback)
@@ -54,10 +54,9 @@ public class ConnectInstanceApi : MonoBehaviour
 				//回调
 				this._callback(null, resp.running);
 			}    
-
-			isDone = true;
 		}
 
+		isDone = true;
 	}
 
 

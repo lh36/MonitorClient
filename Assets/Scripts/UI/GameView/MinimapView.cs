@@ -12,7 +12,7 @@ public class MinimapView : MonoBehaviour
 	public RawImage VideoImage;
 	public int RequestFPS = 5;
 	private GetVideoDataApi m_VideoApi;
-	private int m_iUpdateTime = 0;
+	private float m_fUpdateTime = 0;
 
     private Dictionary<int, GameObject> m_PointDict = new Dictionary<int, GameObject> ();
     private Vector2 m_v2RealMapSize;
@@ -55,9 +55,17 @@ public class MinimapView : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+		this.m_fUpdateTime += Time.fixedDeltaTime;
+
+		if(this.m_fUpdateTime < 1f / (float)RequestFPS)
+		{
+			return;
+		}
+
 		if (GlobalManager.Instance.IsGameRunning && this.m_VideoApi.IsIdle())
 		{
 			StartCoroutine (this.m_VideoApi.Request ());
+			this.m_fUpdateTime = 0;
 		}
 			
     }

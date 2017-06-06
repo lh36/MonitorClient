@@ -14,7 +14,7 @@ public class ShipManager : SingletonUnity<ShipManager>
 
 	private int m_ControlShipID = 1;
     private int m_iInstanceID = 0;
-    private int m_iUpdateTime = 0;
+    private float m_fUpdateTime = 0;
 
 	public int ControlShipID
 	{
@@ -38,16 +38,16 @@ public class ShipManager : SingletonUnity<ShipManager>
 	// Update is called once per frame
 	void Update ()
 	{
-        if (this.m_iUpdateTime >= this.RequestFPS)
+        if (this.m_fUpdateTime >= 1f / (float)RequestFPS)
         {
             if (GlobalManager.Instance.IsGameRunning && this.m_GetParamApi.IsIdle())
             {
                 StartCoroutine (this.m_GetParamApi.Request (this.m_iInstanceID));
-                this.m_iUpdateTime = 0;
+                this.m_fUpdateTime = 0;
             }
         }
 
-        this.m_iUpdateTime += 1;
+        this.m_fUpdateTime += 1;
 	}
 
     /// <summary>

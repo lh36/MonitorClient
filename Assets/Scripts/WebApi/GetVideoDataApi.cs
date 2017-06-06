@@ -12,7 +12,7 @@ public class GetVideoDataApi{
 	private int m_iWidth;
 	private int m_iHeight;
 
-	public bool isDone = false;
+	public bool isDone = true;
 
 
 	public void AddCallback(int width, int height, SignalCallback _callback)
@@ -55,8 +55,9 @@ public class GetVideoDataApi{
 			texture.LoadImage (btData);
 			_callback (null, texture);
 
-			isDone = true;
 		}
+
+		isDone = true;
 
 	}
 
