@@ -55,16 +55,11 @@ public class MinimapView : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-		if (this.m_iUpdateTime >= this.RequestFPS)
+		if (GlobalManager.Instance.IsGameRunning && this.m_VideoApi.IsIdle())
 		{
-			if (GlobalManager.Instance.IsGameRunning && this.m_VideoApi.IsIdle())
-			{
-				StartCoroutine (this.m_VideoApi.Request ());
-				this.m_iUpdateTime = 0;
-			}
+			StartCoroutine (this.m_VideoApi.Request ());
 		}
-
-		this.m_iUpdateTime += 1;
+			
     }
 
     private void SetPointShape(object oSender, object oParam)
