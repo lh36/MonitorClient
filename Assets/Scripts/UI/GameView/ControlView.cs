@@ -16,6 +16,7 @@ public class ControlView : MonoBehaviour
 	public InputField IF_Command;
     public Dropdown Dd_CloseControl;
     public Button Btn_OK;
+	public Button Btn_Cancle;
 	public Button Btn_ClearTrack;
 
 	private GameModel m_Model;
@@ -70,6 +71,10 @@ public class ControlView : MonoBehaviour
 
 		Btn_OK.onClick.AddListener (delegate {
 			InputManager.Instance.ControlOK ();
+		});
+
+		Btn_Cancle.onClick.AddListener (delegate {
+			InputManager.Instance.ControlCancle ();
 		});
 
 		Btn_ClearTrack.onClick.AddListener (delegate {

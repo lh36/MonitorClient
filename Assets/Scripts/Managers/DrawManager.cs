@@ -12,6 +12,7 @@ public class DrawManager : SingletonUnity<DrawManager>
 	public LineRenderer m_ShipLineRenderer;
 	public LineRenderer m_ControlLineRenderer;
 	public LineRenderer m_ControlCircleRenderer;
+	public LineRenderer m_ControlClickRenderer;
 
 	private int m_iUpdateTime = 0;
 	private GetRefLineApi m_GetRefLineApi;
@@ -278,6 +279,31 @@ public class DrawManager : SingletonUnity<DrawManager>
 			m_ControlLineRenderer.SetPosition (4, new Vector3 (2f, Height, 1f));
 			break;
 		}
+	}
+
+	public void DrawClickPoint(List<Vector2> points)
+	{
+		if(points == null || points.Count == 0)
+		{
+			this.m_ControlClickRenderer.SetVertexCount (0);
+			return;
+		}
+
+		if(points.Count == 1)
+		{
+			Vector3 v3CenterPoint = new Vector3 (points[0].x, Height, points[0].y);
+			var pointsList = CalculatePoints (v3CenterPoint, 0.3f);
+			DrawCircle (this.m_ControlClickRenderer, pointsList);
+		}
+		else
+		{
+			this.m_ControlClickRenderer.SetVertexCount (points.Count);
+			for(int i=0; i<points.Count; i++)
+			{
+				this.m_ControlClickRenderer.SetPosition (i, new Vector3 (points [i].x, Height, points [i].y));
+			}
+		}
+
 	}
 }
 

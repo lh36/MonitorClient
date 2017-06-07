@@ -231,13 +231,18 @@ public class InputManager : SingletonUnity<InputManager>
 			}
 			break;
 		case ControlMode.GenLineControl:
+			if(this.m_ClickPointList.Count == 1)
+			{
+				DrawManager.Instance.DrawClickPoint (this.m_ClickPointList);
+			}
 			if(this.m_ClickPointList.Count == 2)
 			{
 				SignalManager.Instance.DispatchSignal (SignalID.ControlClick, null, this.m_ClickPointList);
+				DrawManager.Instance.DrawClickPoint (null);
 			}
 			break;
 		case ControlMode.MulLineControl:
-			
+			DrawManager.Instance.DrawClickPoint (this.m_ClickPointList);
 			break;
 		case ControlMode.CircleControl:
 			if(this.m_ClickPointList.Count == 1)
@@ -266,9 +271,15 @@ public class InputManager : SingletonUnity<InputManager>
 		if(this.m_ControlMode == ControlMode.MulLineControl || this.m_ControlMode == ControlMode.FormationControl)
 		{
 			SignalManager.Instance.DispatchSignal (SignalID.ControlClick, null, this.m_ClickPointList);
+			DrawManager.Instance.DrawClickPoint (null);
 		}
 	}
 
+	public void ControlCancle()
+	{
+		this.m_ClickPointList.Clear ();
+		DrawManager.Instance.DrawClickPoint (null);
+	}
 }
 
 
