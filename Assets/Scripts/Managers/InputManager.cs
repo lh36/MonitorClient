@@ -32,7 +32,7 @@ public class InputManager : SingletonUnity<InputManager>
 	{
 		ControlInput ();
 
-		if(GlobalManager.Instance.IsGameRunning)
+		if(GlobalManager.Instance.IsGameRunning || GlobalManager.Instance.IsVideoRunning)
 		{
 			if(Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor)
 			{

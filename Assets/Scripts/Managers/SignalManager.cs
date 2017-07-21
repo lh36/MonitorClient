@@ -203,4 +203,6 @@ public enum SignalID
     ShipParamChanged,
 
     ControlClick,
+
+    SetTime,
 }

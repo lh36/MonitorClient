@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class GlobalManager : SingletonUnity<GlobalManager>
 {
     private bool m_bIsGameRunning = false;
+    private bool m_bIsVideoRunning = false;
     private string m_sDirScene = "";
 
     private int m_iInstanceID = 0;
@@ -16,6 +17,11 @@ public class GlobalManager : SingletonUnity<GlobalManager>
     {
         set {this.m_bIsGameRunning = value;}
         get {return this.m_bIsGameRunning;}
+    }
+    public bool IsVideoRunning
+    {
+        set {this.m_bIsVideoRunning = value;}
+        get {return this.m_bIsVideoRunning;}
     }
     public string DirScene
     {
@@ -73,10 +79,22 @@ public class GlobalManager : SingletonUnity<GlobalManager>
     public void QuitInstance()
     {
         this.m_bIsGameRunning = false;
+        this.m_bIsVideoRunning = false;
+        VideoManager.Instance.Clear ();
         ShipManager.Instance.DestroyShip ();
         CameraController.Instance.ResetCameraPosition ();
         UIManager.Instance.CloseAllView ();
         UIManager.Instance.ShowViewByName (Constant.UI_Init);
+    }
+
+    public void StartVideo(int iInstanceID, CollectionData oData)
+    {
+        this.m_bIsVideoRunning = true;
+        this.m_iInstanceID = iInstanceID;
+
+        VideoManager.Instance.SetVideoData (oData);
+        UIManager.Instance.CloseAllView ();
+        UIManager.Instance.ShowViewByName (Constant.UI_Video);
     }
 
 	public int GetInstanceID()

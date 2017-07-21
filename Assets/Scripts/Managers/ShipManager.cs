@@ -72,6 +72,27 @@ public class ShipManager : SingletonUnity<ShipManager>
     }
 
     /// <summary>
+    /// 创建新录像实例
+    /// </summary>
+    /// <param name="iInstanceID">实例ID</param>
+    /// <param name="oData">录像数据</param>
+    public void CreateNewVideoInstance(int iInstanceID, int iShipNum)
+    {
+        for(int i=1; i <= iShipNum; i++)
+        {
+            CreateNewShip (i);
+        }
+
+        this.m_iInstanceID = iInstanceID;
+        GlobalManager.Instance.IsGameRunning = false;
+
+        if (this.m_ShipDict.Count > 0)
+        {
+            CameraController.Instance.LookAtObject = this.m_ShipDict [1];
+        }
+    }
+
+    /// <summary>
     /// Creates the new ship.
     /// </summary>
     /// <param name="iShipID">ship ID.</param>
@@ -89,7 +110,7 @@ public class ShipManager : SingletonUnity<ShipManager>
     /// <param name="oShipParam">ship parameter.</param>
     public void SetShipParam(object oSender, object oShipParam)
     {
-        if(!GlobalManager.Instance.IsGameRunning)
+        if(!GlobalManager.Instance.IsGameRunning && !GlobalManager.Instance.IsVideoRunning)
         {
             return;
         }
