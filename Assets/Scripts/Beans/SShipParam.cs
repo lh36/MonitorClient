@@ -22,6 +22,12 @@ public class SShipParam
     public float K1;//速度控制参数
     public float K2;
 
+	public double tem;
+	public double pH;
+	public double diso;
+	public double tur;
+	public double con;
+
     public SShipParam() //默认构造函数
     {
         this.lat = 0;
@@ -42,30 +48,43 @@ public class SShipParam
         this.Kd = 0;
         this.K1 = 0;
         this.K2 = 0;
+
+		this.tem = 0;
+		this.pH = 0;
+		this.diso = 0;
+		this.tur = 0;
+		this.con = 0;
     }
 
-    public SShipParam(double lat, double lon, double posX, double posY,
-        double phi, double gps_phi, float rudAng, float speed, int gear, long time,
-        float kp, float ki, float kd, float k1, float k2) //带参构造函数
-    {
-        this.lat = lat;
-        this.lon = lon;
-        this.posX = posX;
-        this.posY = posY;
+	public SShipParam(double lat, double lon, double posX, double posY,
+		double phi, double gps_phi, float rudAng, float speed, int gear, long time,
+		float kp, float ki, float kd, float k1, float k2, double tem, 
+		double ph, double diso, double tur, double con) //带参构造函数
+	{
+		this.lat = lat;
+		this.lon = lon;
+		this.posX = posX;
+		this.posY = posY;
 
-        this.phi = phi;
-        this.GPS_Phi = gps_phi;
+		this.phi = phi;
+		this.GPS_Phi = gps_phi;
 
-        this.rud = rudAng;
-        this.speed = speed;
-        this.gear = gear;
-        this.time = time;
+		this.rud = rudAng;
+		this.speed = speed;
+		this.gear = gear;
+		this.time = time;
 
-        this.Kp = kp;
-        this.Ki = ki;
-        this.Kd = kd;
-        this.K1 = k1;
-        this.K2 = k2;
-    }
+		this.Kp = kp;
+		this.Ki = ki;
+		this.Kd = kd;
+		this.K1 = k1;
+		this.K2 = k2;
+
+		this.tem = tem;
+		this.pH = ph;
+		this.diso = diso;
+		this.tur = tur;
+		this.con = con;
+	}
 }
 

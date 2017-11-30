@@ -13,6 +13,12 @@ public class ParamView : MonoBehaviour
     public Text T_Gear;
     public Text T_Time;
 
+	public Text T_Tem;
+	public Text T_pH;
+	public Text T_diso;
+	public Text T_tur;
+	public Text T_con;
+
     private GameModel m_Model;
     private float m_fTime = 0;
 
@@ -58,6 +64,13 @@ public class ParamView : MonoBehaviour
 		this.T_Speed.text = oShipParam.speed.ToString ("0.000");
 		this.T_LatLon.text = "(" + oShipParam.lat.ToString("0.000") + ", " + oShipParam.lon.ToString("0.000") + ")";
         this.T_Gear.text = oShipParam.gear.ToString ();
+		this.T_Tem.text = oShipParam.tem.ToString () + "℃";
+		this.T_pH.text = oShipParam.pH.ToString ();
+		this.T_diso.text = oShipParam.diso.ToString ();
+		this.T_tur.text = oShipParam.tur.ToString () + "%";
+		this.T_con.text = oShipParam.con.ToString () + "us/cm";
+
+		//this.T_Tem.text = "温度测试";
 
         long lInstanceTime = GlobalManager.Instance.GetInstanceData ().time;
         if(oShipParam.time > lInstanceTime)

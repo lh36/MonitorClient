@@ -272,11 +272,11 @@ public class DrawManager : SingletonUnity<DrawManager>
 		default:
 			m_ControlCircleRenderer.SetVertexCount (0);
 			m_ControlLineRenderer.SetVertexCount (5);
-			m_ControlLineRenderer.SetPosition (0, new Vector3 (2f, Height, 1f));
-			m_ControlLineRenderer.SetPosition (1, new Vector3 (2f, Height, 14f));
-			m_ControlLineRenderer.SetPosition (2, new Vector3 (46f, Height, 14f));
-			m_ControlLineRenderer.SetPosition (3, new Vector3 (46f, Height, 1f));
-			m_ControlLineRenderer.SetPosition (4, new Vector3 (2f, Height, 1f));
+			m_ControlLineRenderer.SetPosition (0, new Vector3 (-1f, Height, 4f));
+			m_ControlLineRenderer.SetPosition (1, new Vector3 (-46f, Height, 67f));
+			m_ControlLineRenderer.SetPosition (2, new Vector3 (59f, Height, 140f));
+			m_ControlLineRenderer.SetPosition (3, new Vector3 (97f, Height, 74f));
+			m_ControlLineRenderer.SetPosition (4, new Vector3 (-1f, Height, 4f));
 			break;
 		}
 	}

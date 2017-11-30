@@ -59,12 +59,14 @@ public class InputManager : SingletonUnity<InputManager>
 
 	private void PCInput()
 	{
+		// 获取前后信息
 		m_fFrontAndBack = (int) Input.GetAxis("Vertical");
 		if(m_fFrontAndBack != 0)
 		{
 			m_fFrontAndBack = (m_fFrontAndBack > 0) ? 1 : -1;
 		}
 
+		// 获取左右信息
 		m_fLeftAndRight = (int) Input.GetAxis("Horizontal");
 		if(m_fLeftAndRight != 0)
 		{
@@ -206,7 +208,8 @@ public class InputManager : SingletonUnity<InputManager>
 					this.m_ClickPointList.Add (new Vector2 (hitPoint.x, hitPoint.z));
 					break;
 				default:
-					if ((hitPoint.x > 2 && hitPoint.x < 46) && (hitPoint.z > 1 && hitPoint.z < 14)) {
+					if ((hitPoint.x > -52 && hitPoint.x < 105) && (hitPoint.z > 0 && hitPoint.z < 147)) 
+					{
 						this.m_ClickPointList.Add (new Vector2 (hitPoint.x, hitPoint.z));
 					}
 					break;
