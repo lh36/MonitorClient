@@ -5,7 +5,7 @@ public class ShipModel : MonoBehaviour
 {
 	private SShipParam m_Param;
 
-    private SignalCallback _cbSetStatus;
+    private SignalCallback _cbSetStatus;//实验数据改变的回调函数
 
 
 

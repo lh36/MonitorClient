@@ -60,6 +60,7 @@ public class SignalManager : SingletonUnity<SignalManager> {
 			return;
 		}
 
+        // 如果有就直接调用，如果没有就创建
 		if (this.m_HandlerMap.ContainsKey(nSignalID))
 		{
 			this.m_HandlerMap[nSignalID].AddHandler(pCallback);

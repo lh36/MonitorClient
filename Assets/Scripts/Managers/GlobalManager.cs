@@ -8,10 +8,10 @@ public class GlobalManager : SingletonUnity<GlobalManager>
     private bool m_bIsVideoRunning = false;
     private string m_sDirScene = "";
 
-    private int m_iInstanceID = 0;
-    private InstanceResp m_Instance;
-	private ConnectInstanceApi m_HeartApi;
-    public Vector2 MapSize = new Vector2 (50, 25);
+    private int m_iInstanceID = 0;  // 选择实验的ID
+    private InstanceResp m_Instance;  // 选择实验的信息
+	private ConnectInstanceApi m_HeartApi;  //网络通信对象，测试试验运行状态的心跳包
+    public Vector2 MapSize = new Vector2 (50, 25); //实验真实场地坐标范围，米单位，长度50，宽度25
 
     public bool IsGameRunning
     {
