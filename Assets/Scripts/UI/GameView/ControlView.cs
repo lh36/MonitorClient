@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using AssemblyCSharp;
 
 public class ControlView : MonoBehaviour
 {
@@ -18,8 +19,10 @@ public class ControlView : MonoBehaviour
     public Button Btn_OK;
 	public Button Btn_Cancle;
 	public Button Btn_ClearTrack;
+	public Text T_Status;
 
 	private GameModel m_Model;
+	private GetMessageApi m_MessageApi=new GetMessageApi();
 	private bool m_bIsOpenControl = true;
 
 	// Use this for initialization
@@ -80,6 +83,25 @@ public class ControlView : MonoBehaviour
 		Btn_ClearTrack.onClick.AddListener (delegate {
 			DrawManager.Instance.ClearTrack (this.m_Model.GetControlledShipID ());
 		});
+	}
+
+	public float timer = 1.0f;
+	void Update() 
+	{
+		timer -= Time.deltaTime;
+		if (timer <= 0) 
+		{
+			StartCoroutine (this.m_MessageApi.Request());
+			if(this.m_MessageApi.IsRmtAllowed())
+			{
+				T_Status.text = "远程控制开启";
+			}
+			else
+			{
+				T_Status.text = "远程控制关闭";
+			}
+			timer = 1.0f;
+		}
 	}
 
 	private string GetCommandData()
