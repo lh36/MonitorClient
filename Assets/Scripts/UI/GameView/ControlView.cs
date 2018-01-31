@@ -22,7 +22,7 @@ public class ControlView : MonoBehaviour
 	public Text T_Status;
 
 	private GameModel m_Model;
-	private GetMessageApi m_MessageApi=new GetMessageApi();
+	//private GetMessageApi m_MessageApi;
 	private bool m_bIsOpenControl = true;
 
 	// Use this for initialization
@@ -85,24 +85,21 @@ public class ControlView : MonoBehaviour
 		});
 	}
 
-	public float timer = 1.0f;
-	void Update() 
+	/*void FixedUpdate() 
 	{
-		timer -= Time.deltaTime;
-		if (timer <= 0) 
+		m_MessageApi=new GetMessageApi();
+		StartCoroutine (this.m_MessageApi.Request());
+		if(this.m_MessageApi.IsRmtAllowed())
 		{
-			StartCoroutine (this.m_MessageApi.Request());
-			if(this.m_MessageApi.IsRmtAllowed())
-			{
-				T_Status.text = "远程控制开启";
-			}
-			else
-			{
-				T_Status.text = "远程控制关闭";
-			}
-			timer = 1.0f;
+			T_Status.text = "远程控制开启";
 		}
-	}
+		else
+		{
+			T_Status.text = "远程控制关闭";
+		}
+	}*/
+
+
 
 	private string GetCommandData()
 	{
