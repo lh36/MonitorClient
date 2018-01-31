@@ -22,7 +22,7 @@ public class ControlView : MonoBehaviour
 	public Text T_Status;
 
 	private GameModel m_Model;
-	//private GetMessageApi m_MessageApi;
+	private GetMessageApi m_MessageApi = new GetMessageApi();
 	private bool m_bIsOpenControl = true;
 
 	// Use this for initialization
@@ -83,11 +83,12 @@ public class ControlView : MonoBehaviour
 		Btn_ClearTrack.onClick.AddListener (delegate {
 			DrawManager.Instance.ClearTrack (this.m_Model.GetControlledShipID ());
 		});
+
+		InvokeRepeating("UpdateControlStatus", 1,1);
 	}
 
-	/*void FixedUpdate() 
+	void UpdateControlStatus() 
 	{
-		m_MessageApi=new GetMessageApi();
 		StartCoroutine (this.m_MessageApi.Request());
 		if(this.m_MessageApi.IsRmtAllowed())
 		{
@@ -97,7 +98,7 @@ public class ControlView : MonoBehaviour
 		{
 			T_Status.text = "远程控制关闭";
 		}
-	}*/
+	}
 
 
 
