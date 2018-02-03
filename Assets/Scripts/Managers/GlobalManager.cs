@@ -80,7 +80,7 @@ public class GlobalManager : SingletonUnity<GlobalManager>
     {
         this.m_bIsGameRunning = false;
         this.m_bIsVideoRunning = false;
-        VideoManager.Instance.Clear ();
+		VideoManager.Instance.Clear ();
         ShipManager.Instance.DestroyShip ();
         CameraController.Instance.ResetCameraPosition ();
         UIManager.Instance.CloseAllView ();
