@@ -6,7 +6,7 @@ public class VideoManager : SingletonUnity<VideoManager>
 {
     public float UpdateTime = 0.1f;
 
-    private float m_fValue = 0f;
+  //  private float m_fValue = 0f;
     private int m_CurrentIndex = 0;
     private int m_VideoLength = 0;
     private int m_VideoTime = 0;
@@ -98,15 +98,17 @@ public class VideoManager : SingletonUnity<VideoManager>
 
     public void Clear()
     {
-        m_fValue = 0f;
+        //m_fValue = 0f;
         m_CurrentIndex = 0;
         m_VideoLength = 0;
         m_VideoTime = 0;
         m_iShipNum = 0;
         m_fTime = 0f;
 
-        VideoData.Clear ();
-        VideoLength.Clear ();
+		if(VideoData!=null)
+        	VideoData.Clear ();
+		if(VideoLength!=null)
+			VideoLength.Clear ();
     }
 
     public float GetCurrentProgress()
