@@ -26,11 +26,12 @@ public class VGameModel : MonoBehaviour
     public void ChooseShip(int iShipID)
     {
         this.m_ControlShipID = iShipID;
-        CameraController.Instance.LookAtObject = ShipManager.Instance.GetShipObjectByID (iShipID);
 
-        //控制视图改变
+		// 主摄像机视角绑定
+        CameraController.Instance.LookAtObject = ShipManager.Instance.GetShipObjectByID (iShipID);
+        // 控制视图改变
         SignalManager.Instance.DispatchSignal (SignalID.GameView_ControlChanged, null, iShipID);
-        //参数改变
+        // 参数改变
         SignalManager.Instance.DispatchSignal (SignalID.ShipParamChanged, this.m_ControlShipID, 
             ShipManager.Instance.GetShipObjectByID (this.m_ControlShipID).GetComponent<ShipModel> ().Param);
 
